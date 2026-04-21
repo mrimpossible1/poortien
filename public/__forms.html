@@ -1,0 +1,32 @@
+<!--
+  Hidden form for Netlify Forms detection.
+  Netlify's build-time parser scans every HTML file in the publish directory
+  for <form netlify>. This file exists solely so the "submit-protein" form
+  is registered at deploy time, regardless of how Next's static export
+  renders the React version. Do not link to or display this page.
+
+  Submissions show up in the Netlify dashboard under:
+    Project → Forms → submit-protein
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="robots" content="noindex" />
+    <title>Netlify Forms detection</title>
+  </head>
+  <body>
+    <form name="submit-protein" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="bot-field" />
+      <input type="text" name="product" />
+      <input type="text" name="store" />
+      <input type="text" name="type" />
+      <input type="text" name="category" />
+      <input type="number" name="protein" />
+      <input type="number" name="price" step="0.01" />
+      <input type="number" name="calories" />
+      <input type="url" name="source" />
+      <input type="email" name="email" />
+      <textarea name="notes"></textarea>
+    </form>
+  </body>
+</html>

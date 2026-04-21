@@ -112,19 +112,53 @@ For multi-serving packages, use `servings × perServing`:
 
 Commit, push, Netlify rebuilds.
 
+## Handling submissions
+
+The homepage has a "Submit a product for consideration" form powered by
+[Netlify Forms](https://docs.netlify.com/forms/setup/). Submissions appear in
+the Netlify dashboard under **Project → Forms → `submit-protein`**. No backend
+or database — just email-style review.
+
+Acceptance criteria (also shown to submitters):
+
+- **US-available** at a major retailer or chain
+- **Verifiable source link** (nutrition + price)
+- **Protein-oriented** — marketed for protein, or a genuinely protein-dense whole food
+- **Not a duplicate** of an existing entry
+
+Reject:
+
+- Canada / UK / EU-only SKUs
+- Niche DTC-only brands
+- Token-protein products (candy with 6g, etc.)
+
+Workflow: review submission → open the source link → verify macros + price →
+if it passes, add to `src/data/proteins.ts`, commit, push. Netlify rebuilds
+in ~1–2 min.
+
+How the form is wired: the real UI lives in
+[`src/components/SubmitForm.tsx`](src/components/SubmitForm.tsx). A hidden
+twin form in [`public/__forms.html`](public/__forms.html) exists only so
+Netlify's build-time parser registers the form name when scanning the
+publish directory.
+
 ## File layout
 
 ```
+public/
+  __forms.html       # hidden form for Netlify Forms detection at deploy
 src/
   app/
-    layout.tsx      # shell + metadata
-    page.tsx        # homepage, renders the table
-    globals.css     # Tailwind v4 theme
+    layout.tsx       # shell + metadata
+    page.tsx         # homepage, renders the table and submit form
+    globals.css      # Tailwind v4 theme
+    icon.svg         # favicon (auto-wired by Next.js App Router)
   components/
-    ProteinTable.tsx # sortable table + mobile cards
+    ProteinTable.tsx # sortable table + mobile cards + best-pick rows
+    SubmitForm.tsx   # public submission form (wired to Netlify Forms)
   data/
     proteins.ts      # the "database" - edit this to add products
   lib/
-    types.ts         # Protein type
+    types.ts         # Protein type + label/threshold constants
     calc.ts          # derived fields + formatters
 ```

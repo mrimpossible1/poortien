@@ -1,4 +1,5 @@
 import ProteinTable from "@/components/ProteinTable";
+import SubmitForm from "@/components/SubmitForm";
 import { proteins } from "@/data/proteins";
 import { withDerived } from "@/lib/calc";
 
@@ -28,6 +29,8 @@ export default function Home() {
       </header>
 
       <ProteinTable items={items} />
+
+      <SubmitForm />
 
       <footer className="mt-16 pt-8 border-t border-[var(--color-border)] text-sm text-[var(--color-muted)]">
         <p>
