@@ -105,14 +105,18 @@ export default function ProteinTable({ items }: Props) {
 
   const filteredSorted = useMemo(() => {
     const q = query.trim().toLowerCase();
+    // When the user is actively searching, ignore the type/category chips and
+    // search across the entire catalog — otherwise chips can silently hide
+    // matches ("chipotle" returning 0 results because fast-food is toggled off).
+    const searching = q.length > 0;
     const filtered = items.filter((i) => {
-      if (!activeTypes.has(i.type)) return false;
-      if (!activeCategories.has(i.category)) return false;
-      if (q) {
-        const hay = `${i.name} ${i.variant}`.toLowerCase();
-        if (!hay.includes(q)) return false;
+      if (!searching) {
+        if (!activeTypes.has(i.type)) return false;
+        if (!activeCategories.has(i.category)) return false;
+        return true;
       }
-      return true;
+      const hay = `${i.name} ${i.variant}`.toLowerCase();
+      return hay.includes(q);
     });
 
     const sorted = [...filtered].sort((a, b) => {
@@ -210,6 +214,8 @@ export default function ProteinTable({ items }: Props) {
     return counts;
   }, [items]);
 
+  const searching = query.trim().length > 0;
+
   // Detect if current state matches a preset exactly so we can highlight it
   const activePresetId = useMemo(() => {
     for (const p of PRESETS) {
@@ -231,13 +237,27 @@ export default function ProteinTable({ items }: Props) {
   return (
     <div>
       <div className="mb-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-        <input
-          type="search"
-          placeholder="Search products..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="w-full sm:max-w-sm px-4 py-2.5 rounded-lg bg-[var(--color-card)] border border-[var(--color-border)] text-[var(--color-foreground)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-accent)] transition"
-        />
+        <div className="w-full sm:max-w-sm">
+          <input
+            type="search"
+            placeholder="Search products..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="w-full px-4 py-2.5 rounded-lg bg-[var(--color-card)] border border-[var(--color-border)] text-[var(--color-foreground)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-accent)] transition"
+          />
+          {searching && (
+            <div className="mt-1.5 text-xs text-[var(--color-muted)]">
+              Searching across all products (filters ignored).{" "}
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                className="underline hover:text-[var(--color-accent)]"
+              >
+                Clear search
+              </button>
+            </div>
+          )}
+        </div>
         <div className="text-sm text-[var(--color-muted)]">
           {filteredSorted.length} of {items.length}{" "}
           {items.length === 1 ? "product" : "products"}
@@ -245,7 +265,7 @@ export default function ProteinTable({ items }: Props) {
       </div>
 
       {/* Quick presets */}
-      <div className="mb-4">
+      <div className={`mb-4 ${searching ? "opacity-40 pointer-events-none" : ""}`}>
         <div className="text-[10px] uppercase tracking-wider text-[var(--color-muted)] mb-1.5">
           Quick filter
         </div>
@@ -278,7 +298,7 @@ export default function ProteinTable({ items }: Props) {
         </div>
       </div>
 
-      <div className="mb-2">
+      <div className={`mb-2 ${searching ? "opacity-40 pointer-events-none" : ""}`}>
         <div className="text-[10px] uppercase tracking-wider text-[var(--color-muted)] mb-1.5">
           Where
         </div>
@@ -305,7 +325,7 @@ export default function ProteinTable({ items }: Props) {
         </div>
       </div>
 
-      <div className="mb-5 mt-3">
+      <div className={`mb-5 mt-3 ${searching ? "opacity-40 pointer-events-none" : ""}`}>
         <div className="text-[10px] uppercase tracking-wider text-[var(--color-muted)] mb-1.5">
           What
         </div>
