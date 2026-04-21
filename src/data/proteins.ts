@@ -289,6 +289,32 @@ export const proteins: Protein[] = [
     price: 4.49,
     calories: 840, // 12 x 70
   },
+  {
+    id: "chicken-breast-raw-1lb",
+    name: "Chicken breast, boneless skinless",
+    variant: "1 lb raw · US avg price (cook at home)",
+    type: "grocery",
+    category: "meal",
+    // USDA / typical package: 4 oz (113g) raw = ~26g protein, ~120 cal
+    // 1 lb ≈ 4.02 × 26g = ~102g protein, ~486 cal
+    proteinGrams: 102,
+    // BLS APU0000FF1101, boneless chicken breast US city avg, Mar 2026
+    price: 4.14,
+    calories: 490,
+  },
+  {
+    id: "ground-beef-85-15-raw-1lb",
+    name: "Ground beef, 85/15",
+    variant: "1 lb raw · US avg price (cook at home)",
+    type: "grocery",
+    category: "meal",
+    // Typical label: 4 oz (113g) raw = 21g protein, 240 cal
+    // 1 lb ≈ 4.02 × 21g = ~84g protein, ~960 cal
+    proteinGrams: 84,
+    // BLS APU0000703112, 100% ground beef US city avg, Mar 2026
+    price: 6.75,
+    calories: 960,
+  },
 
   // ============================================================
   // CONVENIENCE - single-serve / on-the-go
