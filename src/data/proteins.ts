@@ -335,6 +335,18 @@ export const proteins: Protein[] = [
     calories: 840, // 12 x 70
   },
   {
+    id: "egg-beaters-liquid-egg-whites-32oz",
+    name: "Egg Beaters 100% Liquid Egg Whites",
+    variant: "32oz carton · ≈ 20 egg whites",
+    type: "grocery",
+    category: "meal",
+    // Label: 3 tbsp (46g) = 5g protein, 25 cal. 32oz (907g) ≈ 19.7 servings.
+    // → ~99g protein, ~495 cal per carton. cal/g ≈ 5.0 — the lean floor.
+    proteinGrams: 99,
+    price: 8.99,
+    calories: 495,
+  },
+  {
     id: "chicken-breast-raw-1lb",
     name: "Chicken breast, boneless skinless",
     variant: "1 lb raw · US avg price (cook at home)",
@@ -385,6 +397,33 @@ export const proteins: Protein[] = [
     // Walmart Freshness Guaranteed 1 lb tray, early 2026: $3.72/lb
     price: 3.72,
     calories: 680,
+  },
+  {
+    id: "great-value-frozen-chicken-breast-5lb",
+    name: "Great Value Frozen Chicken Breast",
+    variant: "Boneless skinless · 5 lb bag · individually frozen",
+    type: "grocery",
+    category: "meal",
+    // Label: 4 oz serving = 23g protein, ~120 cal. 5 lb = 20 servings.
+    // → 460g protein, ~2400 cal. cal/g ≈ 5.2 — lean, and at $0.61/20g the
+    // cheapest lean food in the catalog. Individually frozen = grab what you need.
+    proteinGrams: 460,
+    price: 13.94,
+    calories: 2400,
+  },
+  {
+    id: "kirkland-angus-chuck-frozen-patties-18pk",
+    name: "Kirkland Angus Chuck Beef Patties",
+    variant: "Frozen · 1/3 lb × 18 · 75/25 · Costco",
+    type: "grocery",
+    category: "meal",
+    // Label: 1 patty (151g) = 26g protein, 310 cal. 18 patties = 6 lb total.
+    // cal/g ≈ 11.9 — HEAVY tier. Great-tasting but 75/25 chuck is not a
+    // lean-protein play. Lean Sirloin 90/10 or turkey patties would score
+    // much better if available frozen.
+    proteinGrams: 468, // 18 × 26g
+    price: 28.49,
+    calories: 5580, // 18 × 310
   },
 
   // ============================================================
