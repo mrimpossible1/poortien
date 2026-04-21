@@ -134,11 +134,14 @@ function calEfficiencyLabel(calPerG: number): string | null {
 
 export default function ProteinTable({ items }: Props) {
   const [query, setQuery] = useState("");
+  // Filter sets are ADDITIVE: empty = no filter (show all), non-empty = show
+  // only items whose type/category is in the set. This matches user intuition
+  // — an unselected chip means "not filtering by this", not "excluded".
   const [activeTypes, setActiveTypes] = useState<Set<ProteinType>>(
-    () => new Set(TYPE_ORDER)
+    () => new Set()
   );
   const [activeCategories, setActiveCategories] = useState<Set<ProteinCategory>>(
-    () => new Set(CATEGORY_ORDER)
+    () => new Set()
   );
   const [sortKey, setSortKey] = useState<SortKey>("pricePer20gProtein");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
@@ -155,8 +158,9 @@ export default function ProteinTable({ items }: Props) {
         return false;
       }
       if (!searching) {
-        if (!activeTypes.has(i.type)) return false;
-        if (!activeCategories.has(i.category)) return false;
+        if (activeTypes.size > 0 && !activeTypes.has(i.type)) return false;
+        if (activeCategories.size > 0 && !activeCategories.has(i.category))
+          return false;
         return true;
       }
       const hay = `${i.name} ${i.variant}`.toLowerCase();
@@ -243,7 +247,7 @@ export default function ProteinTable({ items }: Props) {
   }, [items]);
 
   function focusCategory(cat: ProteinCategory) {
-    setActiveTypes(new Set(TYPE_ORDER));
+    setActiveTypes(new Set());
     setActiveCategories(new Set([cat]));
     setSortKey("pricePer20gProtein");
     setSortDir("asc");
@@ -253,7 +257,7 @@ export default function ProteinTable({ items }: Props) {
 
   function focusType(type: ProteinType) {
     setActiveTypes(new Set([type]));
-    setActiveCategories(new Set(CATEGORY_ORDER));
+    setActiveCategories(new Set());
     setSortKey("pricePer20gProtein");
     setSortDir("asc");
     setMaxCalPerGram(null);
@@ -272,11 +276,8 @@ export default function ProteinTable({ items }: Props) {
   function toggleType(type: ProteinType) {
     setActiveTypes((prev) => {
       const next = new Set(prev);
-      if (next.has(type)) {
-        if (next.size > 1) next.delete(type);
-      } else {
-        next.add(type);
-      }
+      if (next.has(type)) next.delete(type);
+      else next.add(type);
       return next;
     });
   }
@@ -284,18 +285,15 @@ export default function ProteinTable({ items }: Props) {
   function toggleCategory(cat: ProteinCategory) {
     setActiveCategories((prev) => {
       const next = new Set(prev);
-      if (next.has(cat)) {
-        if (next.size > 1) next.delete(cat);
-      } else {
-        next.add(cat);
-      }
+      if (next.has(cat)) next.delete(cat);
+      else next.add(cat);
       return next;
     });
   }
 
   function applyPreset(preset: Preset) {
-    setActiveTypes(new Set(preset.types ?? TYPE_ORDER));
-    setActiveCategories(new Set(preset.categories ?? CATEGORY_ORDER));
+    setActiveTypes(new Set(preset.types ?? []));
+    setActiveCategories(new Set(preset.categories ?? []));
     setSortKey(preset.sortKey ?? "pricePer20gProtein");
     setSortDir(preset.sortDir ?? "asc");
     setMaxCalPerGram(preset.maxCalPerGram ?? null);
@@ -303,8 +301,8 @@ export default function ProteinTable({ items }: Props) {
   }
 
   function resetAll() {
-    setActiveTypes(new Set(TYPE_ORDER));
-    setActiveCategories(new Set(CATEGORY_ORDER));
+    setActiveTypes(new Set());
+    setActiveCategories(new Set());
     setSortKey("pricePer20gProtein");
     setSortDir("asc");
     setMaxCalPerGram(null);
@@ -334,12 +332,17 @@ export default function ProteinTable({ items }: Props) {
   }, [items]);
 
   const searching = query.trim().length > 0;
+  const hasActiveFilter =
+    activeTypes.size > 0 ||
+    activeCategories.size > 0 ||
+    maxCalPerGram !== null;
 
-  // Detect if current state matches a preset exactly so we can highlight it
+  // Detect if current state matches a preset exactly so we can highlight it.
+  // Undefined types/categories on a preset = "no filter on that axis" = empty set.
   const activePresetId = useMemo(() => {
     for (const p of PRESETS) {
-      const expectedTypes = new Set(p.types ?? TYPE_ORDER);
-      const expectedCats = new Set(p.categories ?? CATEGORY_ORDER);
+      const expectedTypes = new Set(p.types ?? []);
+      const expectedCats = new Set(p.categories ?? []);
       if (
         setEquals(expectedTypes, activeTypes) &&
         setEquals(expectedCats, activeCategories) &&
@@ -553,19 +556,28 @@ export default function ProteinTable({ items }: Props) {
               </button>
             );
           })}
-          <button
-            type="button"
-            onClick={resetAll}
-            className="px-3 py-1.5 rounded-full text-sm border border-dashed border-[var(--color-border)] text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:border-[var(--color-muted)] transition"
-          >
-            Show all
-          </button>
+          {hasActiveFilter && (
+            <button
+              type="button"
+              onClick={resetAll}
+              className="px-3 py-1.5 rounded-full text-sm border border-dashed border-[var(--color-border)] text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:border-[var(--color-muted)] transition"
+            >
+              Clear filters
+            </button>
+          )}
         </div>
       </div>
 
       <div className={`mb-2 ${searching ? "opacity-40 pointer-events-none" : ""}`}>
-        <div className="text-[10px] uppercase tracking-wider text-[var(--color-muted)] mb-1.5">
-          Where
+        <div className="flex items-baseline gap-2 mb-1.5">
+          <div className="text-[10px] uppercase tracking-wider text-[var(--color-muted)]">
+            Where
+          </div>
+          {activeTypes.size === 0 && (
+            <div className="text-[10px] text-[var(--color-muted)] opacity-70">
+              click to filter
+            </div>
+          )}
         </div>
         <div className="flex flex-wrap gap-2">
           {TYPE_ORDER.map((type) => {
@@ -591,8 +603,15 @@ export default function ProteinTable({ items }: Props) {
       </div>
 
       <div className={`mb-5 mt-3 ${searching ? "opacity-40 pointer-events-none" : ""}`}>
-        <div className="text-[10px] uppercase tracking-wider text-[var(--color-muted)] mb-1.5">
-          What
+        <div className="flex items-baseline gap-2 mb-1.5">
+          <div className="text-[10px] uppercase tracking-wider text-[var(--color-muted)]">
+            What
+          </div>
+          {activeCategories.size === 0 && (
+            <div className="text-[10px] text-[var(--color-muted)] opacity-70">
+              click to filter
+            </div>
+          )}
         </div>
         <div className="flex flex-wrap gap-2">
           {CATEGORY_ORDER.map((cat) => {
