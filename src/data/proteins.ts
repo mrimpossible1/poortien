@@ -4,6 +4,13 @@ import type { Protein } from "@/lib/types";
  * The "database": edit this file to add or update products, then commit + push.
  * Netlify rebuilds automatically.
  *
+ * SCOPE: US-only.
+ *  - All pricing in USD at US retailers (Costco, Walmart, Target, Kroger, 7-Eleven,
+ *    Chick-fil-A, Wendy's, Chipotle, Subway, etc.).
+ *  - Do NOT add SKUs that only exist in Canada / UK / EU. A product's availability
+ *    is often regional even when the brand is global (e.g. some Kirkland shake
+ *    SKUs are Canada-only). Verify a US SKU / US retailer listing before adding.
+ *
  * Fields:
  *  - name: main product / brand / family (e.g. "Oikos Pro", "Chipotle")
  *  - variant: flavor, size, pack info (e.g. "Vanilla · 4-pack · 5.3oz cups")

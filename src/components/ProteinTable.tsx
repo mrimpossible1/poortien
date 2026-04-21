@@ -44,6 +44,14 @@ const COLUMNS: Column[] = [
 
 const TYPE_ORDER: ProteinType[] = ["grocery", "convenience", "fast-food"];
 
+// Short context labels for the "Best pick by format" cards — framed the way
+// people actually think about it (not just the product type name).
+const TYPE_TAGLINES: Record<ProteinType, string> = {
+  grocery: "Bulk",
+  convenience: "On the go",
+  "fast-food": "Eating out",
+};
+
 // Light-mode tints built on the 4-color palette (navy / red / orange / yellow)
 const TYPE_STYLES: Record<ProteinType, string> = {
   grocery:
@@ -207,9 +215,45 @@ export default function ProteinTable({ items }: Props) {
     return result;
   }, [items]);
 
+  // Per-type winner: same logic as bestByCategory but grouped by where-you-buy
+  // (grocery bulk / convenience / fast-food). Answers "I'm at Costco" vs
+  // "I'm at a gas station" vs "I'm grabbing fast food right now."
+  const bestByType = useMemo(() => {
+    const result: Record<
+      ProteinType,
+      { item: ProteinWithDerived; isLean: boolean } | null
+    > = {
+      grocery: null,
+      convenience: null,
+      "fast-food": null,
+    };
+    for (const type of TYPE_ORDER) {
+      const pool = items.filter((i) => i.type === type);
+      if (pool.length === 0) continue;
+      const leanPool = pool.filter(
+        (i) => i.caloriesPerGramProtein <= LEAN_PRESET_MAX_CAL_PER_G
+      );
+      const search = leanPool.length > 0 ? leanPool : pool;
+      const winner = search.reduce((best, cur) =>
+        cur.pricePer20gProtein < best.pricePer20gProtein ? cur : best
+      );
+      result[type] = { item: winner, isLean: leanPool.length > 0 };
+    }
+    return result;
+  }, [items]);
+
   function focusCategory(cat: ProteinCategory) {
     setActiveTypes(new Set(TYPE_ORDER));
     setActiveCategories(new Set([cat]));
+    setSortKey("pricePer20gProtein");
+    setSortDir("asc");
+    setMaxCalPerGram(null);
+    setQuery("");
+  }
+
+  function focusType(type: ProteinType) {
+    setActiveTypes(new Set([type]));
+    setActiveCategories(new Set(CATEGORY_ORDER));
     setSortKey("pricePer20gProtein");
     setSortDir("asc");
     setMaxCalPerGram(null);
@@ -312,11 +356,86 @@ export default function ProteinTable({ items }: Props) {
 
   return (
     <div>
+      {/* Best pick by format — answers "where am I buying this?" */}
+      <section className="mb-6">
+        <div className="flex items-baseline justify-between mb-2 gap-3">
+          <h2 className="text-sm font-semibold text-[var(--color-foreground)] uppercase tracking-wider">
+            Best pick by format
+          </h2>
+          <span className="text-xs text-[var(--color-muted)] hidden sm:block">
+            Cheapest lean option (≤ 8 cal/g protein)
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {TYPE_ORDER.map((type) => {
+            const winner = bestByType[type];
+            if (!winner) return null;
+            const p = winner.item;
+            return (
+              <button
+                key={type}
+                type="button"
+                onClick={() => focusType(type)}
+                className="text-left bg-[var(--color-card)] border border-[var(--color-border)] rounded-lg p-3 hover:border-[var(--color-accent)] transition group flex flex-col gap-2"
+                title={`Show all ${PROTEIN_TYPE_LABELS[type].toLowerCase()}`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <TypePill type={type} />
+                    <span className="text-[10px] uppercase tracking-wider text-[var(--color-muted)]">
+                      {TYPE_TAGLINES[type]}
+                    </span>
+                  </div>
+                  {!winner.isLean && (
+                    <span
+                      className="text-[9px] uppercase tracking-wider text-[#B55F00] font-semibold"
+                      title="No lean-tier option of this format; showing cheapest overall"
+                    >
+                      Not lean
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <div className="font-semibold text-[var(--color-foreground)] text-sm leading-tight group-hover:text-[var(--color-accent)] transition">
+                    {p.name}
+                  </div>
+                  <div className="text-xs text-[var(--color-muted)] mt-0.5 leading-snug line-clamp-2">
+                    {p.variant}
+                  </div>
+                </div>
+                <div className="flex items-end justify-between gap-2 mt-auto pt-1 border-t border-[var(--color-border)]">
+                  <div>
+                    <div className="text-[9px] uppercase tracking-wider text-[var(--color-muted)]">
+                      $/20g
+                    </div>
+                    <div className="font-semibold tabular-nums text-[var(--color-foreground)]">
+                      {formatUSD(p.pricePer20gProtein)}
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-[9px] uppercase tracking-wider text-[var(--color-muted)]">
+                      cal/20g
+                    </div>
+                    <div
+                      className={`font-semibold tabular-nums ${calEfficiencyClass(
+                        p.caloriesPerGramProtein
+                      )}`}
+                    >
+                      {formatNumber(p.caloriesPer20gProtein, 0)}
+                    </div>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
       {/* Best pick in each category — top-level answers */}
       <section className="mb-8">
         <div className="flex items-baseline justify-between mb-2 gap-3">
           <h2 className="text-sm font-semibold text-[var(--color-foreground)] uppercase tracking-wider">
-            Best pick in each category
+            Best pick by category
           </h2>
           <span className="text-xs text-[var(--color-muted)] hidden sm:block">
             Cheapest lean option (≤ 8 cal/g protein)

@@ -4,6 +4,10 @@ A simple, sortable database of protein products ranked by **price per gram of pr
 
 Static Next.js site, deployed to Netlify. The "database" is a hardcoded TypeScript file - no Supabase, no API, no backend.
 
+## Scope: US only
+
+All pricing is **USD at US retailers** (Costco, Walmart, Target, Kroger, 7-Eleven, Chick-fil-A, Wendy's, Chipotle, Subway, etc.). Many brands sell regional SKUs that don't exist in the US (e.g. certain Kirkland shake SKUs are Canada-only) — don't add those. When in doubt, verify a US retailer listing before adding.
+
 ## Stack
 
 - Next.js 16 (App Router) + React 19 + TypeScript

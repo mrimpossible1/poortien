@@ -13,7 +13,7 @@ export default function Home() {
             poortien
           </h1>
           <span className="text-sm sm:text-base text-[var(--color-muted)]">
-            best price per gram of protein
+            best price per gram of protein · US only
           </span>
         </div>
         <p className="mt-3 text-[var(--color-muted)] max-w-2xl text-sm sm:text-base">
@@ -30,8 +30,12 @@ export default function Home() {
 
       <footer className="mt-16 pt-8 border-t border-[var(--color-border)] text-sm text-[var(--color-muted)]">
         <p>
-          Prices and macros change. Double-check at the store. To add a
-          product, edit <code className="px-1.5 py-0.5 rounded bg-[var(--color-card-hover)] text-[var(--color-foreground)] border border-[var(--color-border)]">src/data/proteins.ts</code>.
+          US products and pricing only. Prices and macros change — double-check
+          at the store. To add a product, edit{" "}
+          <code className="px-1.5 py-0.5 rounded bg-[var(--color-card-hover)] text-[var(--color-foreground)] border border-[var(--color-border)]">
+            src/data/proteins.ts
+          </code>
+          .
         </p>
       </footer>
     </div>
