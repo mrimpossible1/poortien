@@ -61,6 +61,17 @@ export const proteins: Protein[] = [
     price: 6.99,
     calories: 500, // 5 x 100
   },
+  {
+    id: "fage-total-0-plain-32oz-tub",
+    name: "Fage Total 0%",
+    variant: "Plain nonfat · 32oz tub",
+    type: "grocery",
+    category: "yogurt",
+    // Label: 3/4 cup (170g) = 18g protein, 90 cal. ~5 servings per tub.
+    proteinGrams: 90,
+    price: 7.49,
+    calories: 450,
+  },
 
   // Drinkable yogurt / shakes (multi-pack)
   {
@@ -122,6 +133,17 @@ export const proteins: Protein[] = [
     proteinGrams: 360, // 12 x 30g
     price: 24.99,
     calories: 1800, // 12 x 150
+  },
+  {
+    id: "kirkland-protein-shake-18pk",
+    name: "Kirkland Signature Protein Shake",
+    variant: "Chocolate · Costco · 18-pack · 11oz bottles",
+    type: "grocery",
+    category: "drink",
+    // Label: 30g protein, 160 cal, 2g sugar per bottle. Costco US ~$22.99 for 18pk.
+    proteinGrams: 540, // 18 x 30g
+    price: 22.99,
+    calories: 2880, // 18 x 160
   },
   {
     id: "jocko-molk-shake-chocolate-12pk",
@@ -228,6 +250,29 @@ export const proteins: Protein[] = [
     calories: 2400, // 12 x 200
   },
   {
+    id: "david-gold-protein-bar-12pk",
+    name: "David Gold Protein Bar",
+    variant: "Chocolate Chip Cookie Dough · 12-pack carton",
+    type: "grocery",
+    category: "snack",
+    // Label: 28g protein, 150 cal, 0g sugar per bar. Direct from davidprotein.com.
+    // Note: buy 4 cartons, get 1 free drops effective price to ~$31.20/carton.
+    proteinGrams: 336, // 12 x 28g
+    price: 39.0,
+    calories: 1800, // 12 x 150
+  },
+  {
+    id: "kirkland-turkey-jerky-13-5oz",
+    name: "Kirkland Signature Turkey Jerky",
+    variant: "Original · Costco · 13.5oz resealable bag",
+    type: "grocery",
+    category: "snack",
+    // Label: 14 servings × 1oz; 10g protein, 80 cal, 460mg sodium per serving.
+    proteinGrams: 140, // 14 x 10g
+    price: 20.99,
+    calories: 1120, // 14 x 80
+  },
+  {
     id: "quest-protein-puffs-10pk",
     name: "Quest Protein Puffs",
     variant: "Cheddar · 10-pack · 1oz bags",
@@ -314,6 +359,32 @@ export const proteins: Protein[] = [
     // BLS APU0000703112, 100% ground beef US city avg, Mar 2026
     price: 6.75,
     calories: 960,
+  },
+  {
+    id: "ground-beef-90-10-raw-1lb",
+    name: "Ground beef, 90/10",
+    variant: "1 lb raw · US avg price (cook at home)",
+    type: "grocery",
+    category: "meal",
+    // USDA raw per 100g: 20.0g protein, 176 cal.
+    // 1 lb (454g) ≈ 91g protein, 800 cal. cal/g ≈ 8.8 — meaningfully leaner than 85/15.
+    proteinGrams: 91,
+    // Walmart avg 90/10 (non-sirloin, non-grass-fed), early 2026: ~$6.99/lb
+    price: 6.99,
+    calories: 800,
+  },
+  {
+    id: "chicken-thigh-raw-1lb",
+    name: "Chicken thighs, boneless skinless",
+    variant: "1 lb raw · US avg price (cook at home)",
+    type: "grocery",
+    category: "meal",
+    // Foster Farms / Walmart label: 4 oz (112g) raw = 19g protein, 170 cal.
+    // 1 lb ≈ 76g protein, 680 cal. cal/g ≈ 8.9 — more flavor than breast, ~2x cal/g.
+    proteinGrams: 76,
+    // Walmart Freshness Guaranteed 1 lb tray, early 2026: $3.72/lb
+    price: 3.72,
+    calories: 680,
   },
 
   // ============================================================
@@ -409,6 +480,28 @@ export const proteins: Protein[] = [
     proteinGrams: 20,
     price: 3.49,
     calories: 200,
+  },
+  {
+    id: "david-gold-protein-bar-single",
+    name: "David Gold Protein Bar",
+    variant: "Single · 28g protein · 150 cal · 0g sugar",
+    type: "convenience",
+    category: "snack",
+    // Label: 28g protein, 150 cal. Walmart single ~$2.97.
+    proteinGrams: 28,
+    price: 2.97,
+    calories: 150,
+  },
+  {
+    id: "jack-links-original-beef-jerky-2-85oz",
+    name: "Jack Link's Original Beef Jerky",
+    variant: "2.85oz bag · gas station / grocery",
+    type: "convenience",
+    category: "snack",
+    // Label: 1 oz = 10g protein, 80 cal. Bag ≈ 2.85 servings.
+    proteinGrams: 29, // 2.85 × 10g
+    price: 5.47,
+    calories: 228, // 2.85 × 80
   },
   {
     id: "quest-protein-puffs-single",
