@@ -248,6 +248,21 @@ export default function SubmitForm() {
                   />
                 </Field>
 
+                <Field
+                  label="Servings per package"
+                  hint="12-pack = 12, 1 lb raw meat ≈ 4, single item = 1"
+                >
+                  <input
+                    name="servings"
+                    type="number"
+                    required
+                    min={1}
+                    step="1"
+                    defaultValue={1}
+                    className={inputClass}
+                  />
+                </Field>
+
                 <Field label="Type" hint="optional — we'll assign if blank">
                   <select name="type" defaultValue="" className={inputClass}>
                     <option value="">—</option>

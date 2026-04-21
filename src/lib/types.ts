@@ -29,9 +29,25 @@ export type Protein = {
   variant: string;
   type: ProteinType;
   category: ProteinCategory;
+  /**
+   * TOTAL grams of protein in the whole package/item.
+   * All $/g and cal/g math is driven by these totals — they're authoritative.
+   */
   proteinGrams: number;
+  /** TOTAL USD price of the whole package/item. */
   price: number;
+  /** TOTAL calories in the whole package/item. */
   calories: number;
+  /**
+   * Number of servings in the whole package/item.
+   * - Multi-packs: pack count (12-pack = 12, 4-pack = 4)
+   * - Yogurt tubs / whey tubs: servings per label
+   * - Raw meat (1 lb): ~4 servings (standard 4oz raw portion)
+   * - Dozen eggs: 12
+   * - Fast food / single-serve: 1
+   * Drives per-serving display only. Totals still do the ranking math.
+   */
+  servings: number;
 };
 
 export type ProteinWithDerived = Protein & {
@@ -39,6 +55,9 @@ export type ProteinWithDerived = Protein & {
   pricePer20gProtein: number;
   caloriesPerGramProtein: number;
   caloriesPer20gProtein: number;
+  proteinPerServing: number;
+  pricePerServing: number;
+  caloriesPerServing: number;
 };
 
 export type SortKey =

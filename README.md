@@ -47,8 +47,24 @@ Each entry has these real fields (the rest are derived):
 | `proteinGrams` | **Total** grams of protein in the whole package/item           |
 | `price`        | **Total** USD price of the whole package/item                  |
 | `calories`     | **Total** calories in the whole package/item                   |
+| `servings`     | Number of servings per package (see cheat sheet below)         |
 
-`$/g protein`, `$/20g protein`, `cal/g protein`, and `cal/20g protein` are calculated automatically.
+`$/g protein`, `$/20g protein`, `cal/g protein`, `cal/20g protein`, and per-serving macros are calculated automatically.
+
+### `servings` cheat sheet
+
+All ranking math is driven by the **total** fields. `servings` is display-only — it powers the per-serving line shown under each product (e.g. "12 servings · 30g / 180 cal / $3.08 each"), which is hidden when `servings === 1`.
+
+| Product shape             | Rule                                              |
+| ------------------------- | ------------------------------------------------- |
+| Multi-pack (12-pack, 4-pack, etc.) | Pack count (`12-pack` = `12`)            |
+| Yogurt tub / whey tub     | Servings per container (check the label)          |
+| Raw meat (1 lb)           | `4` (standard 4oz raw portion per label)          |
+| Dozen eggs                | `12` (one egg per serving)                        |
+| Liquid egg whites         | Servings per container (label)                    |
+| Jerky bag                 | Servings per container (label)                    |
+| Rotisserie chicken (~3 lb cooked) | `6` (realistic ~4oz portions)             |
+| Fast food / single-serve  | `1`                                               |
 
 ### The two costs of protein
 
@@ -95,7 +111,7 @@ Keep `name` short and canonical so multiple variants of the same product group t
 
 ### Tip
 
-For multi-serving packages, use `servings × perServing`:
+For multi-serving packages, use `servings × perServing` when doing the arithmetic in comments so the math is auditable:
 
 ```ts
 {
@@ -107,6 +123,7 @@ For multi-serving packages, use `servings × perServing`:
   proteinGrams: 1680,  // 70 servings × 24g
   price: 79.99,
   calories: 8400,      // 70 × 120
+  servings: 70,
 },
 ```
 

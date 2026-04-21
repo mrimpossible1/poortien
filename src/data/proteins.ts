@@ -19,8 +19,11 @@ import type { Protein } from "@/lib/types";
  *  - proteinGrams: TOTAL grams of protein in the package/item
  *  - price: TOTAL USD price of the package/item
  *  - calories: TOTAL calories in the package/item
+ *  - servings: number of servings per package (multi-packs = pack count;
+ *    tubs = label servings; raw meat 1 lb = 4; dozen eggs = 12; fast-food = 1)
  *
- * $/g protein, $/20g protein, and cal/g protein are calculated automatically.
+ * $/g protein, $/20g protein, cal/g protein, and per-serving values are
+ * calculated automatically.
  */
 export const proteins: Protein[] = [
   // ============================================================
@@ -37,6 +40,7 @@ export const proteins: Protein[] = [
     proteinGrams: 80, // 4 x 20g
     price: 5.99,
     calories: 560, // 4 x 140
+    servings: 4,
   },
   {
     id: "oikos-triple-zero-vanilla-4pk",
@@ -47,6 +51,7 @@ export const proteins: Protein[] = [
     proteinGrams: 60, // 4 x 15g
     price: 4.99,
     calories: 480, // 4 x 120
+    servings: 4,
   },
   {
     id: "chobani-fit-vanilla-4pk",
@@ -57,6 +62,7 @@ export const proteins: Protein[] = [
     proteinGrams: 56, // 4 x 14g
     price: 4.99,
     calories: 480, // 4 x 120
+    servings: 4,
   },
   {
     id: "oikos-triple-zero-plain-32oz-tub",
@@ -67,6 +73,7 @@ export const proteins: Protein[] = [
     proteinGrams: 90, // 5 servings x 18g
     price: 6.99,
     calories: 500, // 5 x 100
+    servings: 5,
   },
   {
     id: "fage-total-0-plain-32oz-tub",
@@ -78,6 +85,7 @@ export const proteins: Protein[] = [
     proteinGrams: 90,
     price: 7.49,
     calories: 450,
+    servings: 5,
   },
 
   // Drinkable yogurt / shakes (multi-pack)
@@ -90,6 +98,7 @@ export const proteins: Protein[] = [
     proteinGrams: 184, // 8 x 23g
     price: 15.99,
     calories: 1120, // 8 x 140
+    servings: 8,
   },
   {
     id: "oikos-protein-shake-30g-4pk",
@@ -100,6 +109,7 @@ export const proteins: Protein[] = [
     proteinGrams: 120, // 4 x 30g
     price: 10.99,
     calories: 680, // 4 x 170
+    servings: 4,
   },
   {
     id: "fairlife-core-power-26g-12pk",
@@ -110,6 +120,7 @@ export const proteins: Protein[] = [
     proteinGrams: 312, // 12 x 26g
     price: 36.99,
     calories: 2160, // 12 x 180
+    servings: 12,
   },
   {
     id: "fairlife-core-power-elite-42g-12pk",
@@ -120,6 +131,7 @@ export const proteins: Protein[] = [
     proteinGrams: 504, // 12 x 42g
     price: 64.8,
     calories: 2760, // 12 x 230
+    servings: 12,
   },
   {
     id: "fairlife-nutrition-plan-30g-18pk-costco",
@@ -130,6 +142,7 @@ export const proteins: Protein[] = [
     proteinGrams: 540, // 18 x 30g
     price: 27.99,
     calories: 2700, // 18 x 150
+    servings: 18,
   },
   {
     id: "premier-protein-shake-chocolate-12pk",
@@ -140,6 +153,7 @@ export const proteins: Protein[] = [
     proteinGrams: 360, // 12 x 30g
     price: 24.99,
     calories: 1800, // 12 x 150
+    servings: 12,
   },
   {
     id: "jocko-molk-shake-chocolate-12pk",
@@ -150,6 +164,7 @@ export const proteins: Protein[] = [
     proteinGrams: 360, // 12 x 30g
     price: 44.99,
     calories: 2160, // 12 x 180
+    servings: 12,
   },
 
   // Whey powder (tubs / bags)
@@ -162,6 +177,7 @@ export const proteins: Protein[] = [
     proteinGrams: 1680, // 70 servings x 24g
     price: 79.99,
     calories: 8400, // 70 x 120
+    servings: 70,
   },
   {
     id: "costco-kirkland-whey-vanilla-6lb",
@@ -172,6 +188,7 @@ export const proteins: Protein[] = [
     proteinGrams: 2400, // 100 servings x 24g
     price: 59.99,
     calories: 12000, // 100 x 120
+    servings: 100,
   },
   {
     id: "jocko-molk-whey-chocolate-2-3lb",
@@ -182,6 +199,7 @@ export const proteins: Protein[] = [
     proteinGrams: 660, // 30 servings x 22g
     price: 42.99,
     calories: 3300, // 30 x 110
+    servings: 30,
   },
   {
     id: "promix-whey-isolate-2-5lb",
@@ -192,6 +210,7 @@ export const proteins: Protein[] = [
     proteinGrams: 780, // 26 servings x 30g
     price: 68.0,
     calories: 4160, // 26 x 160
+    servings: 26,
   },
   {
     id: "teras-whey-simply-pure-12oz",
@@ -202,6 +221,7 @@ export const proteins: Protein[] = [
     proteinGrams: 240, // 12 servings x 20g
     price: 22.99,
     calories: 1320, // 12 x 110
+    servings: 12,
   },
 
   // Bars, puffs, meat sticks, eggs, tuna, cottage cheese (multi-pack)
@@ -214,6 +234,7 @@ export const proteins: Protein[] = [
     proteinGrams: 252, // 12 x 21g
     price: 24.99,
     calories: 2280, // 12 x 190
+    servings: 12,
   },
   {
     id: "chomps-original-beef-10pk",
@@ -224,6 +245,7 @@ export const proteins: Protein[] = [
     proteinGrams: 100, // 10 x 10g
     price: 25.6,
     calories: 1000, // 10 x 100
+    servings: 10,
   },
   {
     id: "chomps-original-beef-24pk",
@@ -234,6 +256,7 @@ export const proteins: Protein[] = [
     proteinGrams: 240, // 24 x 10g
     price: 54.96, // 24 x $2.29
     calories: 2400, // 24 x 100
+    servings: 24,
   },
   {
     id: "barebells-protein-bar-12pk",
@@ -244,6 +267,7 @@ export const proteins: Protein[] = [
     proteinGrams: 240, // 12 x 20g
     price: 30.99,
     calories: 2400, // 12 x 200
+    servings: 12,
   },
   {
     id: "david-gold-protein-bar-12pk",
@@ -256,6 +280,7 @@ export const proteins: Protein[] = [
     proteinGrams: 336, // 12 x 28g
     price: 39.0,
     calories: 1800, // 12 x 150
+    servings: 12,
   },
   {
     id: "kirkland-turkey-jerky-13-5oz",
@@ -267,6 +292,7 @@ export const proteins: Protein[] = [
     proteinGrams: 140, // 14 x 10g
     price: 20.99,
     calories: 1120, // 14 x 80
+    servings: 14,
   },
   {
     id: "quest-protein-puffs-10pk",
@@ -277,6 +303,7 @@ export const proteins: Protein[] = [
     proteinGrams: 170, // 10 x 17g
     price: 22.99,
     calories: 1300, // 10 x 130
+    servings: 10,
   },
   {
     id: "sams-hardboiled-eggs-24ct",
@@ -284,9 +311,11 @@ export const proteins: Protein[] = [
     variant: "Sam's Club · 24 eggs (12 × 2-packs)",
     type: "grocery",
     category: "snack",
+    // Label treats each 2-pack as 1 serving — so 12 servings per case.
     proteinGrams: 132, // 12 packs x 11g per 2 eggs
     price: 12.98,
     calories: 1440, // 12 x 120
+    servings: 12,
   },
   {
     id: "starkist-tuna-pouch-4pk",
@@ -297,6 +326,7 @@ export const proteins: Protein[] = [
     proteinGrams: 68, // 4 x 17g
     price: 4.69,
     calories: 280, // 4 x 70
+    servings: 4,
   },
   {
     id: "good-culture-cottage-cheese-16oz",
@@ -307,6 +337,7 @@ export const proteins: Protein[] = [
     proteinGrams: 56, // 4 servings x 14g
     price: 4.49,
     calories: 320, // 4 x 80
+    servings: 4,
   },
 
   // Meal-style groceries
@@ -316,9 +347,11 @@ export const proteins: Protein[] = [
     variant: "Costco · whole (~3 lb cooked)",
     type: "grocery",
     category: "meal",
+    // ~3 lb cooked / ~4oz portions ≈ 6 realistic servings at ~28g each.
     proteinGrams: 166,
     price: 4.99,
     calories: 1037,
+    servings: 6,
   },
   {
     id: "dozen-large-eggs-grocery",
@@ -329,6 +362,7 @@ export const proteins: Protein[] = [
     proteinGrams: 72, // 12 x 6g
     price: 4.49,
     calories: 840, // 12 x 70
+    servings: 12,
   },
   {
     id: "egg-beaters-liquid-egg-whites-32oz",
@@ -341,6 +375,7 @@ export const proteins: Protein[] = [
     proteinGrams: 99,
     price: 8.99,
     calories: 495,
+    servings: 20,
   },
   {
     id: "chicken-breast-raw-1lb",
@@ -354,6 +389,7 @@ export const proteins: Protein[] = [
     // BLS APU0000FF1101, boneless chicken breast US city avg, Mar 2026
     price: 4.14,
     calories: 490,
+    servings: 4,
   },
   {
     id: "ground-beef-85-15-raw-1lb",
@@ -367,6 +403,7 @@ export const proteins: Protein[] = [
     // BLS APU0000703112, 100% ground beef US city avg, Mar 2026
     price: 6.75,
     calories: 960,
+    servings: 4,
   },
   {
     id: "ground-beef-90-10-raw-1lb",
@@ -380,6 +417,7 @@ export const proteins: Protein[] = [
     // Walmart avg 90/10 (non-sirloin, non-grass-fed), early 2026: ~$6.99/lb
     price: 6.99,
     calories: 800,
+    servings: 4,
   },
   {
     id: "chicken-thigh-raw-1lb",
@@ -393,6 +431,7 @@ export const proteins: Protein[] = [
     // Walmart Freshness Guaranteed 1 lb tray, early 2026: $3.72/lb
     price: 3.72,
     calories: 680,
+    servings: 4,
   },
   {
     id: "great-value-frozen-chicken-breast-5lb",
@@ -406,6 +445,7 @@ export const proteins: Protein[] = [
     proteinGrams: 460,
     price: 13.94,
     calories: 2400,
+    servings: 20,
   },
   {
     id: "kirkland-angus-chuck-frozen-patties-18pk",
@@ -420,6 +460,7 @@ export const proteins: Protein[] = [
     proteinGrams: 468, // 18 × 26g
     price: 28.49,
     calories: 5580, // 18 × 310
+    servings: 18,
   },
 
   // ============================================================
@@ -435,6 +476,7 @@ export const proteins: Protein[] = [
     proteinGrams: 23,
     price: 2.0,
     calories: 140,
+    servings: 1,
   },
   {
     id: "oikos-protein-shake-30g-single",
@@ -445,6 +487,7 @@ export const proteins: Protein[] = [
     proteinGrams: 30,
     price: 3.49,
     calories: 170,
+    servings: 1,
   },
   {
     id: "fairlife-core-power-26g-single",
@@ -455,6 +498,7 @@ export const proteins: Protein[] = [
     proteinGrams: 26,
     price: 3.88,
     calories: 180,
+    servings: 1,
   },
   {
     id: "fairlife-core-power-elite-42g-single",
@@ -465,6 +509,7 @@ export const proteins: Protein[] = [
     proteinGrams: 42,
     price: 5.28,
     calories: 230,
+    servings: 1,
   },
   {
     id: "premier-protein-shake-single",
@@ -475,6 +520,7 @@ export const proteins: Protein[] = [
     proteinGrams: 30,
     price: 3.49,
     calories: 150,
+    servings: 1,
   },
   {
     id: "jocko-molk-shake-chocolate-single",
@@ -485,6 +531,7 @@ export const proteins: Protein[] = [
     proteinGrams: 30,
     price: 3.99,
     calories: 180,
+    servings: 1,
   },
   {
     id: "chomps-original-beef-single",
@@ -495,6 +542,7 @@ export const proteins: Protein[] = [
     proteinGrams: 10,
     price: 2.56,
     calories: 100,
+    servings: 1,
   },
   {
     id: "quest-protein-bar-single",
@@ -505,6 +553,7 @@ export const proteins: Protein[] = [
     proteinGrams: 21,
     price: 2.99,
     calories: 190,
+    servings: 1,
   },
   {
     id: "barebells-protein-bar-single",
@@ -515,6 +564,7 @@ export const proteins: Protein[] = [
     proteinGrams: 20,
     price: 3.49,
     calories: 200,
+    servings: 1,
   },
   {
     id: "david-gold-protein-bar-single",
@@ -526,6 +576,7 @@ export const proteins: Protein[] = [
     proteinGrams: 28,
     price: 2.97,
     calories: 150,
+    servings: 1,
   },
   {
     id: "jack-links-original-beef-jerky-2-85oz",
@@ -533,10 +584,12 @@ export const proteins: Protein[] = [
     variant: "2.85oz bag · gas station / grocery",
     type: "convenience",
     category: "snack",
-    // Label: 1 oz = 10g protein, 80 cal. Bag ≈ 2.85 servings.
+    // Label: 1 oz = 10g protein, 80 cal. Bag ≈ 2.85 servings. Most people
+    // eat the whole bag — use 3 servings for per-serving macros display.
     proteinGrams: 29, // 2.85 × 10g
     price: 5.47,
     calories: 228, // 2.85 × 80
+    servings: 3,
   },
   {
     id: "quest-protein-puffs-single",
@@ -547,6 +600,7 @@ export const proteins: Protein[] = [
     proteinGrams: 17,
     price: 3.5,
     calories: 130,
+    servings: 1,
   },
   {
     id: "hardboiled-eggs-711-2pk",
@@ -554,9 +608,11 @@ export const proteins: Protein[] = [
     variant: "2-pack",
     type: "convenience",
     category: "snack",
+    // Label: 2 eggs = 1 serving.
     proteinGrams: 11,
     price: 3.49,
     calories: 120,
+    servings: 1,
   },
   {
     id: "hardboiled-eggs-wawa-2pk",
@@ -567,6 +623,7 @@ export const proteins: Protein[] = [
     proteinGrams: 12,
     price: 1.49,
     calories: 140,
+    servings: 1,
   },
   {
     id: "starkist-tuna-pouch-single",
@@ -577,6 +634,7 @@ export const proteins: Protein[] = [
     proteinGrams: 17,
     price: 1.79,
     calories: 70,
+    servings: 1,
   },
 
   // ============================================================
@@ -592,6 +650,7 @@ export const proteins: Protein[] = [
     proteinGrams: 30,
     price: 6.0,
     calories: 380,
+    servings: 1,
   },
   {
     id: "innout-double-double-protein-style",
@@ -602,6 +661,7 @@ export const proteins: Protein[] = [
     proteinGrams: 33,
     price: 5.65,
     calories: 520,
+    servings: 1,
   },
   {
     id: "innout-cheeseburger-protein-style",
@@ -612,6 +672,7 @@ export const proteins: Protein[] = [
     proteinGrams: 17,
     price: 3.95,
     calories: 300,
+    servings: 1,
   },
   {
     id: "pterrys-double-cheeseburger-lettuce-wrap",
@@ -622,6 +683,7 @@ export const proteins: Protein[] = [
     proteinGrams: 48,
     price: 5.25,
     calories: 588,
+    servings: 1,
   },
   {
     id: "pterrys-crispy-chicken-bites-8pc",
@@ -632,6 +694,7 @@ export const proteins: Protein[] = [
     proteinGrams: 42,
     price: 5.0,
     calories: 300,
+    servings: 1,
   },
   {
     id: "wendys-daves-double-no-bun",
@@ -642,6 +705,7 @@ export const proteins: Protein[] = [
     proteinGrams: 44,
     price: 7.99,
     calories: 630,
+    servings: 1,
   },
   {
     id: "wendys-baconator-no-bun",
@@ -652,6 +716,7 @@ export const proteins: Protein[] = [
     proteinGrams: 53,
     price: 7.99,
     calories: 730,
+    servings: 1,
   },
   {
     id: "mcdonalds-triple-cheeseburger",
@@ -662,6 +727,7 @@ export const proteins: Protein[] = [
     proteinGrams: 32,
     price: 4.89,
     calories: 530,
+    servings: 1,
   },
   {
     id: "chickfila-grilled-nuggets-12pc",
@@ -672,6 +738,7 @@ export const proteins: Protein[] = [
     proteinGrams: 38,
     price: 15.79,
     calories: 200,
+    servings: 1,
   },
   {
     id: "chickfila-grilled-nuggets-8pc",
@@ -682,6 +749,7 @@ export const proteins: Protein[] = [
     proteinGrams: 25,
     price: 12.29,
     calories: 130,
+    servings: 1,
   },
   {
     id: "jersey-mikes-big-kahuna-tub",
@@ -692,6 +760,7 @@ export const proteins: Protein[] = [
     proteinGrams: 41,
     price: 10.2,
     calories: 450,
+    servings: 1,
   },
   {
     id: "chipotle-high-protein-cup-chicken",
@@ -702,6 +771,7 @@ export const proteins: Protein[] = [
     proteinGrams: 32,
     price: 4.55,
     calories: 180,
+    servings: 1,
   },
   {
     id: "chipotle-high-protein-cup-steak",
@@ -712,6 +782,7 @@ export const proteins: Protein[] = [
     proteinGrams: 21,
     price: 6.3,
     calories: 150,
+    servings: 1,
   },
   {
     id: "chipotle-double-high-protein-bowl",
@@ -722,6 +793,7 @@ export const proteins: Protein[] = [
     proteinGrams: 81,
     price: 15.9,
     calories: 760,
+    servings: 1,
   },
   {
     id: "chipotle-double-high-protein-burrito",
@@ -732,6 +804,7 @@ export const proteins: Protein[] = [
     proteinGrams: 79,
     price: 15.9,
     calories: 840,
+    servings: 1,
   },
   {
     id: "chipotle-high-protein-high-fiber-bowl",
@@ -742,6 +815,7 @@ export const proteins: Protein[] = [
     proteinGrams: 46,
     price: 11.35,
     calories: 545,
+    servings: 1,
   },
   {
     id: "chipotle-high-protein-low-calorie-bowl",
@@ -752,6 +826,7 @@ export const proteins: Protein[] = [
     proteinGrams: 35,
     price: 14.3,
     calories: 460,
+    servings: 1,
   },
   {
     id: "chipotle-high-protein-taco",
@@ -762,6 +837,7 @@ export const proteins: Protein[] = [
     proteinGrams: 15,
     price: 3.8,
     calories: 190,
+    servings: 1,
   },
   {
     id: "subway-protein-pocket-baja-chicken",
@@ -772,6 +848,7 @@ export const proteins: Protein[] = [
     proteinGrams: 24,
     price: 3.99,
     calories: 330,
+    servings: 1,
   },
   {
     id: "subway-protein-pocket-peppercorn-ranch",
@@ -782,6 +859,7 @@ export const proteins: Protein[] = [
     proteinGrams: 24,
     price: 3.99,
     calories: 330,
+    servings: 1,
   },
   {
     id: "subway-protein-pocket-turkey-ham",
@@ -792,6 +870,7 @@ export const proteins: Protein[] = [
     proteinGrams: 21,
     price: 3.99,
     calories: 320,
+    servings: 1,
   },
   {
     id: "subway-protein-pocket-italian-trio",
@@ -802,5 +881,6 @@ export const proteins: Protein[] = [
     proteinGrams: 22,
     price: 3.99,
     calories: 480,
+    servings: 1,
   },
 ];

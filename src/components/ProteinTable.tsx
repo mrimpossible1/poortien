@@ -694,6 +694,7 @@ export default function ProteinTable({ items }: Props) {
                       <div className="text-xs text-[var(--color-muted)]">
                         {p.variant}
                       </div>
+                      <ServingLine p={p} />
                       <div className="flex items-center flex-wrap gap-1.5 mt-0.5">
                         <TypePill type={p.type} />
                         <CategoryPill category={p.category} />
@@ -791,6 +792,7 @@ export default function ProteinTable({ items }: Props) {
                   <div className="text-xs text-[var(--color-muted)] mt-0.5">
                     {p.variant}
                   </div>
+                  <ServingLine p={p} className="mt-0.5" />
                 </div>
                 {isBest && (
                   <span className="shrink-0 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--color-accent)] text-white font-semibold">
@@ -861,6 +863,31 @@ function CategoryPill({ category }: { category: ProteinCategory }) {
     >
       {PROTEIN_CATEGORY_LABELS[category]}
     </span>
+  );
+}
+
+/**
+ * Subtle per-serving breakdown shown beneath the variant line.
+ * Hidden when servings === 1 (same info as the total, so redundant).
+ */
+function ServingLine({
+  p,
+  className = "",
+}: {
+  p: ProteinWithDerived;
+  className?: string;
+}) {
+  if (p.servings <= 1) return null;
+  return (
+    <div
+      className={`text-[11px] text-[var(--color-muted)] tabular-nums opacity-80 ${className}`}
+      title="Per-serving breakdown"
+    >
+      {p.servings} servings ·{" "}
+      {formatNumber(p.proteinPerServing, 0)}g /{" "}
+      {formatNumber(p.caloriesPerServing, 0)} cal /{" "}
+      {formatUSD(p.pricePerServing)} each
+    </div>
   );
 }
 
