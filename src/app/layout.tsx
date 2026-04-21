@@ -1,27 +1,44 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+const SITE_URL = "https://poortien.netlify.app";
+const SITE_TITLE = "Cheapest protein per gram — compare US prices | poortien";
+const SITE_DESCRIPTION =
+  "Compare US protein products by cost per gram. Find the cheapest whey, shakes, Greek yogurt, bars, jerky, and fast-food protein — sorted by price and calorie efficiency.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "poortien - best price per gram of protein",
+    default: SITE_TITLE,
     template: "%s | poortien",
   },
-  description:
-    "A simple, filterable database of protein products ranked by price per gram of protein. Find the cheapest whey, yogurt, bars, and shakes.",
+  description: SITE_DESCRIPTION,
   keywords: [
+    "cheapest protein per gram",
     "price per gram of protein",
-    "cheapest protein",
-    "protein value",
-    "whey protein",
-    "protein yogurt",
-    "protein bar",
-    "protein shake",
+    "cost per gram of protein",
+    "cheapest protein source",
+    "best value protein",
+    "protein per dollar",
+    "cheapest whey protein",
+    "cheapest fast food protein",
+    "protein price comparison",
   ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "poortien - best price per gram of protein",
-    description:
-      "A simple, filterable database of protein products ranked by price per gram of protein.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: "poortien",
     type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
   robots: {
     index: true,

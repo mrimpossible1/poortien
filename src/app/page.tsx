@@ -13,12 +13,13 @@ export default function Home() {
             poortien
           </h1>
           <span className="text-sm sm:text-base text-[var(--color-muted)]">
-            best price per gram of protein · US only
+            cheapest protein per gram · US only
           </span>
         </div>
         <p className="mt-3 text-[var(--color-muted)] max-w-2xl text-sm sm:text-base">
-          A simple, sortable list of protein products. The two numbers that
-          actually matter for hitting a protein target on a budget:{" "}
+          Find the cheapest protein per gram across US grocery, convenience,
+          and fast-food options. The two numbers that actually matter for
+          hitting a protein target on a budget:{" "}
           <strong className="text-[var(--color-foreground)]">$/20g protein</strong>{" "}
           (dollar cost) and{" "}
           <strong className="text-[var(--color-foreground)]">cal/20g protein</strong>{" "}
