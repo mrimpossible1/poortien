@@ -36,7 +36,8 @@ Each entry has these real fields (the rest are derived):
 | Field          | What to enter                                                  |
 | -------------- | -------------------------------------------------------------- |
 | `id`           | Unique slug (e.g. `"oikos-pro-vanilla-4pk"`)                   |
-| `name`         | Brand + flavor + size (e.g. `"Oikos Pro Vanilla (4-pack)"`)    |
+| `name`         | Main product / brand / family — displayed as the row title (e.g. `"Oikos Pro"`) |
+| `variant`      | Flavor, size, pack info — displayed as the subtitle (e.g. `"Vanilla · 4-pack · 5.3oz cups"`) |
 | `type`         | **Where** you buy it: `"grocery"`, `"convenience"`, `"fast-food"` |
 | `category`     | **What** it is: `"drink"`, `"yogurt"`, `"snack"`, `"whey"`, `"meal"` |
 | `proteinGrams` | **Total** grams of protein in the whole package/item           |
@@ -44,6 +45,18 @@ Each entry has these real fields (the rest are derived):
 | `calories`     | **Total** calories in the whole package/item                   |
 
 `$/g protein`, `$/20g protein`, and `cal/g protein` are calculated automatically.
+
+### Splitting `name` vs `variant`
+
+Keep `name` short and canonical so multiple variants of the same product group together visually. Put everything flavor/size/pack-related in `variant`, separated by middle-dots `·`:
+
+```ts
+{ name: "Chipotle High Protein Cup",          variant: "Adobo Chicken" }
+{ name: "Chipotle High Protein Cup",          variant: "Steak" }
+{ name: "Oikos Pro",                          variant: "Vanilla · 4-pack · 5.3oz cups" }
+{ name: "Oikos Pro 23g Drink",                variant: "Single · 7oz bottle" }
+{ name: "Jocko Mölk Whey Protein Powder",     variant: "Chocolate · 2.3 lb tub" }
+```
 
 ### `type` cheat sheet (where you buy it)
 
@@ -66,7 +79,8 @@ For multi-serving packages, use `servings × perServing`:
 ```ts
 {
   id: "on-gold-standard-whey-vanilla-5lb",
-  name: "Optimum Nutrition Gold Standard Whey, Vanilla (5 lb)",
+  name: "Optimum Nutrition Gold Standard Whey",
+  variant: "Vanilla · 5 lb tub",
   type: "grocery",
   category: "whey",
   proteinGrams: 1680,  // 70 servings × 24g

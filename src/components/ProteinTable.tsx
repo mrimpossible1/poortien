@@ -66,6 +66,32 @@ const CATEGORY_STYLES: Record<ProteinCategory, string> = {
   meal: "bg-[#001F30]/8 text-[#001F30] border-[#001F30]/25",
 };
 
+type Preset = {
+  id: string;
+  label: string;
+  types?: ProteinType[];
+  categories?: ProteinCategory[];
+  sortKey?: SortKey;
+  sortDir?: SortDir;
+};
+
+// Quick-filter presets — one click resets filters + sort to a useful slice
+const PRESETS: Preset[] = [
+  {
+    id: "cheapest",
+    label: "Cheapest $/20g",
+    sortKey: "pricePer20gProtein",
+    sortDir: "asc",
+  },
+  { id: "drinks", label: "Drinks", categories: ["drink"] },
+  { id: "whey", label: "Whey powder", categories: ["whey"] },
+  { id: "yogurt", label: "Yogurt", categories: ["yogurt"] },
+  { id: "snacks", label: "Snacks", categories: ["snack"] },
+  { id: "fast-food", label: "Fast food", types: ["fast-food"] },
+  { id: "on-the-go", label: "On the go", types: ["convenience"] },
+  { id: "bulk", label: "Bulk / grocery", types: ["grocery"] },
+];
+
 export default function ProteinTable({ items }: Props) {
   const [query, setQuery] = useState("");
   const [activeTypes, setActiveTypes] = useState<Set<ProteinType>>(
@@ -82,7 +108,10 @@ export default function ProteinTable({ items }: Props) {
     const filtered = items.filter((i) => {
       if (!activeTypes.has(i.type)) return false;
       if (!activeCategories.has(i.category)) return false;
-      if (q && !i.name.toLowerCase().includes(q)) return false;
+      if (q) {
+        const hay = `${i.name} ${i.variant}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
       return true;
     });
 
@@ -143,6 +172,22 @@ export default function ProteinTable({ items }: Props) {
     });
   }
 
+  function applyPreset(preset: Preset) {
+    setActiveTypes(new Set(preset.types ?? TYPE_ORDER));
+    setActiveCategories(new Set(preset.categories ?? CATEGORY_ORDER));
+    setSortKey(preset.sortKey ?? "pricePer20gProtein");
+    setSortDir(preset.sortDir ?? "asc");
+    setQuery("");
+  }
+
+  function resetAll() {
+    setActiveTypes(new Set(TYPE_ORDER));
+    setActiveCategories(new Set(CATEGORY_ORDER));
+    setSortKey("pricePer20gProtein");
+    setSortDir("asc");
+    setQuery("");
+  }
+
   const typeCounts = useMemo(() => {
     const counts: Record<ProteinType, number> = {
       grocery: 0,
@@ -165,6 +210,24 @@ export default function ProteinTable({ items }: Props) {
     return counts;
   }, [items]);
 
+  // Detect if current state matches a preset exactly so we can highlight it
+  const activePresetId = useMemo(() => {
+    for (const p of PRESETS) {
+      const expectedTypes = new Set(p.types ?? TYPE_ORDER);
+      const expectedCats = new Set(p.categories ?? CATEGORY_ORDER);
+      if (
+        setEquals(expectedTypes, activeTypes) &&
+        setEquals(expectedCats, activeCategories) &&
+        (p.sortKey ?? "pricePer20gProtein") === sortKey &&
+        (p.sortDir ?? "asc") === sortDir &&
+        query.trim() === ""
+      ) {
+        return p.id;
+      }
+    }
+    return null;
+  }, [activeTypes, activeCategories, sortKey, sortDir, query]);
+
   return (
     <div>
       <div className="mb-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
@@ -178,6 +241,40 @@ export default function ProteinTable({ items }: Props) {
         <div className="text-sm text-[var(--color-muted)]">
           {filteredSorted.length} of {items.length}{" "}
           {items.length === 1 ? "product" : "products"}
+        </div>
+      </div>
+
+      {/* Quick presets */}
+      <div className="mb-4">
+        <div className="text-[10px] uppercase tracking-wider text-[var(--color-muted)] mb-1.5">
+          Quick filter
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {PRESETS.map((preset) => {
+            const active = activePresetId === preset.id;
+            return (
+              <button
+                key={preset.id}
+                type="button"
+                onClick={() => applyPreset(preset)}
+                className={`px-3 py-1.5 rounded-full text-sm border font-medium transition ${
+                  active
+                    ? "bg-[var(--color-accent)] text-white border-[var(--color-accent)]"
+                    : "bg-[var(--color-card)] text-[var(--color-foreground)] border-[var(--color-border)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                }`}
+                aria-pressed={active}
+              >
+                {preset.label}
+              </button>
+            );
+          })}
+          <button
+            type="button"
+            onClick={resetAll}
+            className="px-3 py-1.5 rounded-full text-sm border border-dashed border-[var(--color-border)] text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:border-[var(--color-muted)] transition"
+          >
+            Show all
+          </button>
         </div>
       </div>
 
@@ -247,14 +344,14 @@ export default function ProteinTable({ items }: Props) {
                   <th
                     key={col.key}
                     scope="col"
-                    className={`px-4 py-3 font-medium ${
+                    className={`px-4 py-3 font-medium whitespace-nowrap ${
                       col.numeric ? "text-right" : "text-left"
                     }`}
                   >
                     <button
                       type="button"
                       onClick={() => toggleSort(col.key)}
-                      className={`inline-flex items-center gap-1 hover:text-[var(--color-foreground)] transition ${
+                      className={`inline-flex items-center gap-1 hover:text-[var(--color-foreground)] transition whitespace-nowrap ${
                         isActive ? "text-[var(--color-foreground)]" : ""
                       } ${col.numeric ? "flex-row-reverse" : ""}`}
                     >
@@ -278,34 +375,43 @@ export default function ProteinTable({ items }: Props) {
                       : "hover:bg-[var(--color-card-hover)]"
                   }`}
                 >
-                  <td className="px-4 py-3">
-                    <div className="flex items-center flex-wrap gap-2">
-                      <span className="font-medium">{p.name}</span>
-                      <TypePill type={p.type} />
-                      <CategoryPill category={p.category} />
-                      {isBest && (
-                        <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--color-accent)] text-white font-semibold">
-                          Best
+                  <td className="px-4 py-3 align-top">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center flex-wrap gap-2">
+                        <span className="font-semibold text-[var(--color-foreground)]">
+                          {p.name}
                         </span>
-                      )}
+                        {isBest && (
+                          <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--color-accent)] text-white font-semibold">
+                            Best
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs text-[var(--color-muted)]">
+                        {p.variant}
+                      </div>
+                      <div className="flex items-center flex-wrap gap-1.5 mt-0.5">
+                        <TypePill type={p.type} />
+                        <CategoryPill category={p.category} />
+                      </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums">
+                  <td className="px-4 py-3 text-right tabular-nums align-top">
                     {formatNumber(p.proteinGrams)}
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums">
+                  <td className="px-4 py-3 text-right tabular-nums align-top">
                     {formatUSD(p.price)}
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums font-semibold">
+                  <td className="px-4 py-3 text-right tabular-nums font-semibold align-top">
                     {formatPricePerGram(p.pricePerGramProtein)}
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums font-semibold">
+                  <td className="px-4 py-3 text-right tabular-nums font-semibold align-top">
                     {formatUSD(p.pricePer20gProtein)}
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums text-[var(--color-muted)]">
+                  <td className="px-4 py-3 text-right tabular-nums text-[var(--color-muted)] align-top">
                     {formatNumber(p.calories)}
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums text-[var(--color-muted)]">
+                  <td className="px-4 py-3 text-right tabular-nums text-[var(--color-muted)] align-top">
                     {formatNumber(p.caloriesPerGramProtein, 1)}
                   </td>
                 </tr>
@@ -369,7 +475,12 @@ export default function ProteinTable({ items }: Props) {
               }`}
             >
               <div className="flex items-start justify-between gap-3">
-                <div className="font-medium">{p.name}</div>
+                <div className="min-w-0">
+                  <div className="font-semibold">{p.name}</div>
+                  <div className="text-xs text-[var(--color-muted)] mt-0.5">
+                    {p.variant}
+                  </div>
+                </div>
                 {isBest && (
                   <span className="shrink-0 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--color-accent)] text-white font-semibold">
                     Best
@@ -413,6 +524,12 @@ export default function ProteinTable({ items }: Props) {
       </div>
     </div>
   );
+}
+
+function setEquals<T>(a: Set<T>, b: Set<T>): boolean {
+  if (a.size !== b.size) return false;
+  for (const v of a) if (!b.has(v)) return false;
+  return true;
 }
 
 function TypePill({ type }: { type: ProteinType }) {

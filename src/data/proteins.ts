@@ -5,7 +5,8 @@ import type { Protein } from "@/lib/types";
  * Netlify rebuilds automatically.
  *
  * Fields:
- *  - name: product name (include brand + flavor + size for clarity)
+ *  - name: main product / brand / family (e.g. "Oikos Pro", "Chipotle")
+ *  - variant: flavor, size, pack info (e.g. "Vanilla · 4-pack · 5.3oz cups")
  *  - type: where you buy it — "grocery" | "fast-food" | "convenience"
  *  - category: what it is — "drink" | "yogurt" | "snack" | "whey" | "meal"
  *  - proteinGrams: TOTAL grams of protein in the package/item
@@ -19,10 +20,11 @@ export const proteins: Protein[] = [
   // GROCERY - multi-pack / bulk purchases
   // ============================================================
 
-  // Yogurt cups (multi-pack)
+  // Yogurt cups & tubs
   {
     id: "oikos-pro-vanilla-4pk",
-    name: "Oikos Pro Vanilla (4-pack, 5.3oz cups)",
+    name: "Oikos Pro",
+    variant: "Vanilla · 4-pack · 5.3oz cups",
     type: "grocery",
     category: "yogurt",
     proteinGrams: 80, // 4 x 20g
@@ -31,7 +33,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "oikos-triple-zero-vanilla-4pk",
-    name: "Oikos Triple Zero Vanilla (4-pack, 5.3oz cups)",
+    name: "Oikos Triple Zero",
+    variant: "Vanilla · 4-pack · 5.3oz cups",
     type: "grocery",
     category: "yogurt",
     proteinGrams: 60, // 4 x 15g
@@ -40,7 +43,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "chobani-fit-vanilla-4pk",
-    name: "Chobani Fit Greek Yogurt Vanilla (4-pack, 5.3oz)",
+    name: "Chobani Fit Greek Yogurt",
+    variant: "Vanilla · 4-pack · 5.3oz",
     type: "grocery",
     category: "yogurt",
     proteinGrams: 56, // 4 x 14g
@@ -49,7 +53,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "oikos-triple-zero-plain-32oz-tub",
-    name: "Oikos Triple Zero Plain Greek Yogurt (32oz tub)",
+    name: "Oikos Triple Zero",
+    variant: "Plain · 32oz tub",
     type: "grocery",
     category: "yogurt",
     proteinGrams: 90, // 5 servings x 18g
@@ -60,16 +65,18 @@ export const proteins: Protein[] = [
   // Drinkable yogurt / shakes (multi-pack)
   {
     id: "oikos-pro-drink-23g-8pk",
-    name: "Oikos Pro 23g Drink, Strawberry Banana (8-pack, 7oz bottles)",
+    name: "Oikos Pro 23g Drink",
+    variant: "Strawberry Banana · 8-pack · 7oz bottles",
     type: "grocery",
     category: "drink",
     proteinGrams: 184, // 8 x 23g
-    price: 15.99, // ~$2.00/bottle in 8pk
+    price: 15.99,
     calories: 1120, // 8 x 140
   },
   {
     id: "oikos-protein-shake-30g-4pk",
-    name: "Oikos Protein Shake 30g, Vanilla (4-pack, 12oz bottles)",
+    name: "Oikos Protein Shake 30g",
+    variant: "Vanilla · 4-pack · 12oz bottles",
     type: "grocery",
     category: "drink",
     proteinGrams: 120, // 4 x 30g
@@ -78,7 +85,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "fairlife-core-power-26g-12pk",
-    name: "Fairlife Core Power 26g Vanilla (12-pack, 14oz bottles)",
+    name: "Fairlife Core Power 26g",
+    variant: "Vanilla · 12-pack · 14oz bottles",
     type: "grocery",
     category: "drink",
     proteinGrams: 312, // 12 x 26g
@@ -87,7 +95,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "fairlife-core-power-elite-42g-12pk",
-    name: "Fairlife Core Power Elite 42g Vanilla (12-pack, 14oz bottles)",
+    name: "Fairlife Core Power Elite 42g",
+    variant: "Vanilla · 12-pack · 14oz bottles",
     type: "grocery",
     category: "drink",
     proteinGrams: 504, // 12 x 42g
@@ -96,16 +105,18 @@ export const proteins: Protein[] = [
   },
   {
     id: "fairlife-nutrition-plan-30g-18pk-costco",
-    name: "Fairlife Nutrition Plan 30g Chocolate, Costco (18-pack, 11.5oz bottles)",
+    name: "Fairlife Nutrition Plan 30g",
+    variant: "Chocolate · Costco · 18-pack · 11.5oz bottles",
     type: "grocery",
     category: "drink",
     proteinGrams: 540, // 18 x 30g
-    price: 27.99, // typical Costco price
+    price: 27.99,
     calories: 2700, // 18 x 150
   },
   {
     id: "premier-protein-shake-chocolate-12pk",
-    name: "Premier Protein Shake Chocolate (12-pack, 11oz bottles)",
+    name: "Premier Protein Shake",
+    variant: "Chocolate · 12-pack · 11oz bottles",
     type: "grocery",
     category: "drink",
     proteinGrams: 360, // 12 x 30g
@@ -114,7 +125,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "jocko-molk-shake-chocolate-12pk",
-    name: "Jocko Mölk Protein Shake, Chocolate (12-pack, 12oz bottles)",
+    name: "Jocko Mölk Protein Shake",
+    variant: "Chocolate · 12-pack · 12oz bottles",
     type: "grocery",
     category: "drink",
     proteinGrams: 360, // 12 x 30g
@@ -122,10 +134,11 @@ export const proteins: Protein[] = [
     calories: 2160, // 12 x 180
   },
 
-  // Whey powder (tubs)
+  // Whey powder (tubs / bags)
   {
     id: "on-gold-standard-whey-vanilla-5lb",
-    name: "Optimum Nutrition Gold Standard Whey, Vanilla (5 lb tub)",
+    name: "Optimum Nutrition Gold Standard Whey",
+    variant: "Vanilla · 5 lb tub",
     type: "grocery",
     category: "whey",
     proteinGrams: 1680, // 70 servings x 24g
@@ -134,7 +147,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "costco-kirkland-whey-vanilla-6lb",
-    name: "Kirkland Signature Whey Protein, Vanilla, Costco (6 lb tub)",
+    name: "Kirkland Signature Whey Protein",
+    variant: "Vanilla · Costco · 6 lb tub",
     type: "grocery",
     category: "whey",
     proteinGrams: 2400, // 100 servings x 24g
@@ -143,7 +157,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "jocko-molk-whey-chocolate-2-3lb",
-    name: "Jocko Mölk Whey Protein Powder, Chocolate (2.3 lb tub)",
+    name: "Jocko Mölk Whey Protein Powder",
+    variant: "Chocolate · 2.3 lb tub",
     type: "grocery",
     category: "whey",
     proteinGrams: 660, // 30 servings x 22g
@@ -152,7 +167,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "promix-whey-isolate-2-5lb",
-    name: "Promix Whey Isolate, Dutch Chocolate (2.5 lb bag)",
+    name: "Promix Whey Isolate",
+    variant: "Dutch Chocolate · 2.5 lb bag",
     type: "grocery",
     category: "whey",
     proteinGrams: 780, // 26 servings x 30g
@@ -161,7 +177,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "teras-whey-simply-pure-12oz",
-    name: "Tera's Whey Simply Pure, Dark Chocolate (12 oz bag, grass-fed)",
+    name: "Tera's Whey Simply Pure",
+    variant: "Dark Chocolate · 12 oz bag · grass-fed",
     type: "grocery",
     category: "whey",
     proteinGrams: 240, // 12 servings x 20g
@@ -169,10 +186,11 @@ export const proteins: Protein[] = [
     calories: 1320, // 12 x 110
   },
 
-  // Bars, puffs, meat sticks (multi-pack)
+  // Bars, puffs, meat sticks, eggs, tuna, cottage cheese (multi-pack)
   {
     id: "quest-protein-bar-choc-chip-cookie-12pk",
-    name: "Quest Protein Bar, Choc Chip Cookie Dough (12-pack)",
+    name: "Quest Protein Bar",
+    variant: "Choc Chip Cookie Dough · 12-pack",
     type: "grocery",
     category: "snack",
     proteinGrams: 252, // 12 x 21g
@@ -181,7 +199,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "chomps-original-beef-10pk",
-    name: "Chomps Original Beef (10-pack, 1.15oz sticks)",
+    name: "Chomps Original Beef",
+    variant: "10-pack · 1.15oz sticks",
     type: "grocery",
     category: "snack",
     proteinGrams: 100, // 10 x 10g
@@ -190,7 +209,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "chomps-original-beef-24pk",
-    name: "Chomps Original Beef (24-pack, 1.15oz sticks)",
+    name: "Chomps Original Beef",
+    variant: "24-pack · 1.15oz sticks",
     type: "grocery",
     category: "snack",
     proteinGrams: 240, // 24 x 10g
@@ -199,7 +219,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "barebells-protein-bar-12pk",
-    name: "Barebells Protein Bar, Variety Pack (12-pack, 55g bars)",
+    name: "Barebells Protein Bar",
+    variant: "Variety Pack · 12-pack · 55g bars",
     type: "grocery",
     category: "snack",
     proteinGrams: 240, // 12 x 20g
@@ -208,7 +229,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "quest-protein-puffs-10pk",
-    name: "Quest Protein Puffs, Cheddar (10-pack, 1oz bags)",
+    name: "Quest Protein Puffs",
+    variant: "Cheddar · 10-pack · 1oz bags",
     type: "grocery",
     category: "snack",
     proteinGrams: 170, // 10 x 17g
@@ -217,7 +239,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "sams-hardboiled-eggs-24ct",
-    name: "Snack Attack Cage Free Hard Boiled Eggs, Sam's Club (24 eggs = 12 x 2-packs)",
+    name: "Snack Attack Cage Free Hard Boiled Eggs",
+    variant: "Sam's Club · 24 eggs (12 × 2-packs)",
     type: "grocery",
     category: "snack",
     proteinGrams: 132, // 12 packs x 11g per 2 eggs
@@ -226,7 +249,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "starkist-tuna-pouch-4pk",
-    name: "StarKist Light Tuna in Water, pouch (4-pack, 2.6oz each)",
+    name: "StarKist Light Tuna in Water",
+    variant: "Pouch · 4-pack · 2.6oz each",
     type: "grocery",
     category: "snack",
     proteinGrams: 68, // 4 x 17g
@@ -235,7 +259,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "good-culture-cottage-cheese-16oz",
-    name: "Good Culture 2% Cottage Cheese (16oz tub)",
+    name: "Good Culture Cottage Cheese",
+    variant: "2% · 16oz tub",
     type: "grocery",
     category: "snack",
     proteinGrams: 56, // 4 servings x 14g
@@ -246,7 +271,8 @@ export const proteins: Protein[] = [
   // Meal-style groceries
   {
     id: "costco-rotisserie-chicken",
-    name: "Costco Kirkland Rotisserie Chicken, whole (~3 lb cooked)",
+    name: "Kirkland Rotisserie Chicken",
+    variant: "Costco · whole (~3 lb cooked)",
     type: "grocery",
     category: "meal",
     proteinGrams: 166,
@@ -255,7 +281,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "dozen-large-eggs-grocery",
-    name: "Large eggs (1 dozen, raw - cook at home)",
+    name: "Large eggs",
+    variant: "1 dozen · raw (cook at home)",
     type: "grocery",
     category: "meal",
     proteinGrams: 72, // 12 x 6g
@@ -269,7 +296,8 @@ export const proteins: Protein[] = [
 
   {
     id: "oikos-pro-drink-23g-single",
-    name: "Oikos Pro 23g Drink, single 7oz bottle",
+    name: "Oikos Pro 23g Drink",
+    variant: "Single · 7oz bottle",
     type: "convenience",
     category: "drink",
     proteinGrams: 23,
@@ -278,7 +306,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "oikos-protein-shake-30g-single",
-    name: "Oikos Protein Shake 30g, single 12oz bottle",
+    name: "Oikos Protein Shake 30g",
+    variant: "Single · 12oz bottle",
     type: "convenience",
     category: "drink",
     proteinGrams: 30,
@@ -287,7 +316,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "fairlife-core-power-26g-single",
-    name: "Fairlife Core Power 26g Vanilla, single 14oz bottle",
+    name: "Fairlife Core Power 26g",
+    variant: "Vanilla · single · 14oz bottle",
     type: "convenience",
     category: "drink",
     proteinGrams: 26,
@@ -296,7 +326,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "fairlife-core-power-elite-42g-single",
-    name: "Fairlife Core Power Elite 42g Vanilla, single 14oz bottle",
+    name: "Fairlife Core Power Elite 42g",
+    variant: "Vanilla · single · 14oz bottle",
     type: "convenience",
     category: "drink",
     proteinGrams: 42,
@@ -305,7 +336,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "premier-protein-shake-single",
-    name: "Premier Protein Shake Chocolate, single 11oz bottle",
+    name: "Premier Protein Shake",
+    variant: "Chocolate · single · 11oz bottle",
     type: "convenience",
     category: "drink",
     proteinGrams: 30,
@@ -314,7 +346,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "jocko-molk-shake-chocolate-single",
-    name: "Jocko Mölk Protein Shake, Chocolate, single 12oz bottle",
+    name: "Jocko Mölk Protein Shake",
+    variant: "Chocolate · single · 12oz bottle",
     type: "convenience",
     category: "drink",
     proteinGrams: 30,
@@ -323,16 +356,18 @@ export const proteins: Protein[] = [
   },
   {
     id: "chomps-original-beef-single",
-    name: "Chomps Original Beef, single 1.15oz stick",
+    name: "Chomps Original Beef",
+    variant: "Single · 1.15oz stick",
     type: "convenience",
     category: "snack",
     proteinGrams: 10,
-    price: 2.56, // single-stick pricing
+    price: 2.56,
     calories: 100,
   },
   {
     id: "quest-protein-bar-single",
-    name: "Quest Protein Bar, Choc Chip Cookie Dough, single bar",
+    name: "Quest Protein Bar",
+    variant: "Choc Chip Cookie Dough · single",
     type: "convenience",
     category: "snack",
     proteinGrams: 21,
@@ -341,7 +376,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "barebells-protein-bar-single",
-    name: "Barebells Protein Bar, single (55g)",
+    name: "Barebells Protein Bar",
+    variant: "Single · 55g",
     type: "convenience",
     category: "snack",
     proteinGrams: 20,
@@ -350,7 +386,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "quest-protein-puffs-single",
-    name: "Quest Protein Puffs, Cheddar, single 1oz bag",
+    name: "Quest Protein Puffs",
+    variant: "Cheddar · single · 1oz bag",
     type: "convenience",
     category: "snack",
     proteinGrams: 17,
@@ -359,7 +396,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "hardboiled-eggs-711-2pk",
-    name: "7-Eleven Cage Free Hard Boiled Eggs, 2-pack",
+    name: "7-Eleven Cage Free Hard Boiled Eggs",
+    variant: "2-pack",
     type: "convenience",
     category: "snack",
     proteinGrams: 11,
@@ -368,7 +406,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "hardboiled-eggs-wawa-2pk",
-    name: "Wawa Hard Boiled Eggs, 2-pack (3oz)",
+    name: "Wawa Hard Boiled Eggs",
+    variant: "2-pack · 3oz",
     type: "convenience",
     category: "snack",
     proteinGrams: 12,
@@ -377,7 +416,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "starkist-tuna-pouch-single",
-    name: "StarKist Light Tuna in Water, single 2.6oz pouch",
+    name: "StarKist Light Tuna in Water",
+    variant: "Single · 2.6oz pouch",
     type: "convenience",
     category: "snack",
     proteinGrams: 17,
@@ -391,7 +431,8 @@ export const proteins: Protein[] = [
 
   {
     id: "innout-flying-dutchman",
-    name: "In-N-Out Flying Dutchman (secret menu, 2 patties + 2 cheese, no bun)",
+    name: "In-N-Out Flying Dutchman",
+    variant: "Secret menu · 2 patties + 2 cheese · no bun",
     type: "fast-food",
     category: "meal",
     proteinGrams: 30,
@@ -400,7 +441,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "wendys-daves-double-no-bun",
-    name: "Wendy's Dave's Double, no bun (order manually)",
+    name: "Wendy's Dave's Double",
+    variant: "No bun · order manually",
     type: "fast-food",
     category: "meal",
     proteinGrams: 44,
@@ -409,7 +451,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "chipotle-high-protein-cup-chicken",
-    name: "Chipotle High Protein Cup - Adobo Chicken",
+    name: "Chipotle High Protein Cup",
+    variant: "Adobo Chicken",
     type: "fast-food",
     category: "meal",
     proteinGrams: 32,
@@ -418,7 +461,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "chipotle-high-protein-cup-steak",
-    name: "Chipotle High Protein Cup - Steak",
+    name: "Chipotle High Protein Cup",
+    variant: "Steak",
     type: "fast-food",
     category: "meal",
     proteinGrams: 21,
@@ -428,6 +472,7 @@ export const proteins: Protein[] = [
   {
     id: "chipotle-double-high-protein-bowl",
     name: "Chipotle Double High Protein Bowl",
+    variant: "Chicken + steak combo",
     type: "fast-food",
     category: "meal",
     proteinGrams: 81,
@@ -437,6 +482,7 @@ export const proteins: Protein[] = [
   {
     id: "chipotle-double-high-protein-burrito",
     name: "Chipotle Double High Protein Burrito",
+    variant: "Chicken + steak combo",
     type: "fast-food",
     category: "meal",
     proteinGrams: 79,
@@ -446,6 +492,7 @@ export const proteins: Protein[] = [
   {
     id: "chipotle-high-protein-high-fiber-bowl",
     name: "Chipotle High Protein-High Fiber Bowl",
+    variant: "Beans + fajita veg",
     type: "fast-food",
     category: "meal",
     proteinGrams: 46,
@@ -455,6 +502,7 @@ export const proteins: Protein[] = [
   {
     id: "chipotle-high-protein-low-calorie-bowl",
     name: "Chipotle High Protein-Low Calorie Bowl",
+    variant: "Lean build",
     type: "fast-food",
     category: "meal",
     proteinGrams: 35,
@@ -463,7 +511,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "chipotle-high-protein-taco",
-    name: "Chipotle High Protein Taco (Adobo Chicken)",
+    name: "Chipotle High Protein Taco",
+    variant: "Adobo Chicken · single",
     type: "fast-food",
     category: "meal",
     proteinGrams: 15,
@@ -472,7 +521,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "subway-protein-pocket-baja-chicken",
-    name: "Subway Protein Pocket - Baja Chicken",
+    name: "Subway Protein Pocket",
+    variant: "Baja Chicken",
     type: "fast-food",
     category: "meal",
     proteinGrams: 24,
@@ -481,7 +531,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "subway-protein-pocket-peppercorn-ranch",
-    name: "Subway Protein Pocket - Peppercorn Ranch Chicken",
+    name: "Subway Protein Pocket",
+    variant: "Peppercorn Ranch Chicken",
     type: "fast-food",
     category: "meal",
     proteinGrams: 24,
@@ -490,7 +541,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "subway-protein-pocket-turkey-ham",
-    name: "Subway Protein Pocket - Turkey & Ham",
+    name: "Subway Protein Pocket",
+    variant: "Turkey & Ham",
     type: "fast-food",
     category: "meal",
     proteinGrams: 21,
@@ -499,7 +551,8 @@ export const proteins: Protein[] = [
   },
   {
     id: "subway-protein-pocket-italian-trio",
-    name: "Subway Protein Pocket - Italian Trio",
+    name: "Subway Protein Pocket",
+    variant: "Italian Trio",
     type: "fast-food",
     category: "meal",
     proteinGrams: 22,

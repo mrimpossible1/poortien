@@ -23,7 +23,10 @@ export const PROTEIN_CATEGORY_LABELS: Record<ProteinCategory, string> = {
 
 export type Protein = {
   id: string;
+  /** Main product / brand / family, e.g. "Oikos Pro" */
   name: string;
+  /** Flavor, size, pack info, e.g. "Vanilla · 4-pack · 5.3oz cups" */
+  variant: string;
   type: ProteinType;
   category: ProteinCategory;
   proteinGrams: number;
