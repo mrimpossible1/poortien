@@ -40,13 +40,14 @@ const COLUMNS: Column[] = [
 
 const TYPE_ORDER: ProteinType[] = ["grocery", "convenience", "fast-food"];
 
+// Light-mode tints built on the 4-color palette (navy / red / orange / yellow)
 const TYPE_STYLES: Record<ProteinType, string> = {
   grocery:
-    "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
+    "bg-[#003049]/10 text-[#003049] border-[#003049]/30",
   convenience:
-    "bg-sky-500/15 text-sky-300 border-sky-500/30",
+    "bg-[#F77F00]/12 text-[#B55F00] border-[#F77F00]/40",
   "fast-food":
-    "bg-amber-500/15 text-amber-300 border-amber-500/30",
+    "bg-[#D62828]/10 text-[#A31F1F] border-[#D62828]/35",
 };
 
 const CATEGORY_ORDER: ProteinCategory[] = [
@@ -58,11 +59,11 @@ const CATEGORY_ORDER: ProteinCategory[] = [
 ];
 
 const CATEGORY_STYLES: Record<ProteinCategory, string> = {
-  drink: "bg-cyan-500/15 text-cyan-300 border-cyan-500/30",
-  yogurt: "bg-violet-500/15 text-violet-300 border-violet-500/30",
-  snack: "bg-rose-500/15 text-rose-300 border-rose-500/30",
-  whey: "bg-lime-500/15 text-lime-300 border-lime-500/30",
-  meal: "bg-orange-500/15 text-orange-300 border-orange-500/30",
+  drink: "bg-[#003049]/10 text-[#003049] border-[#003049]/30",
+  yogurt: "bg-[#FCBF49]/30 text-[#7A5A00] border-[#FCBF49]/60",
+  snack: "bg-[#D62828]/10 text-[#A31F1F] border-[#D62828]/35",
+  whey: "bg-[#F77F00]/12 text-[#B55F00] border-[#F77F00]/40",
+  meal: "bg-[#001F30]/8 text-[#001F30] border-[#001F30]/25",
 };
 
 export default function ProteinTable({ items }: Props) {
@@ -283,7 +284,7 @@ export default function ProteinTable({ items }: Props) {
                       <TypePill type={p.type} />
                       <CategoryPill category={p.category} />
                       {isBest && (
-                        <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--color-accent)] text-black font-semibold">
+                        <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--color-accent)] text-white font-semibold">
                           Best
                         </span>
                       )}
@@ -370,7 +371,7 @@ export default function ProteinTable({ items }: Props) {
               <div className="flex items-start justify-between gap-3">
                 <div className="font-medium">{p.name}</div>
                 {isBest && (
-                  <span className="shrink-0 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--color-accent)] text-black font-semibold">
+                  <span className="shrink-0 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--color-accent)] text-white font-semibold">
                     Best
                   </span>
                 )}

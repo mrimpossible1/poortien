@@ -28,7 +28,7 @@ export default function Home() {
       <footer className="mt-16 pt-8 border-t border-[var(--color-border)] text-sm text-[var(--color-muted)]">
         <p>
           Prices and macros change. Double-check at the store. To add a
-          product, edit <code className="px-1.5 py-0.5 rounded bg-[var(--color-card)] text-[var(--color-foreground)]">src/data/proteins.ts</code>.
+          product, edit <code className="px-1.5 py-0.5 rounded bg-[var(--color-card-hover)] text-[var(--color-foreground)] border border-[var(--color-border)]">src/data/proteins.ts</code>.
         </p>
       </footer>
     </div>

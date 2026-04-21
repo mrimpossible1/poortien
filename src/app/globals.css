@@ -1,15 +1,28 @@
 @import "tailwindcss";
 
+/**
+ * Palette (colorhunt.co/palette/003049d62828f77f00fcbf49):
+ *   navy   #003049
+ *   red    #D62828
+ *   orange #F77F00
+ *   yellow #FCBF49
+ */
 @theme {
-  --color-background: #0a0a0f;
-  --color-foreground: #f5f5f7;
-  --color-card: #14141c;
-  --color-card-hover: #1c1c26;
-  --color-border: #242432;
-  --color-muted: #8a8a9a;
-  --color-accent: #22c55e;
-  --color-accent-hover: #16a34a;
-  --color-accent-dim: rgba(34, 197, 94, 0.12);
+  --color-background: #fdf8eb;
+  --color-foreground: #003049;
+  --color-card: #ffffff;
+  --color-card-hover: #fff4d6;
+  --color-border: #e6dbb9;
+  --color-muted: #5c7a8f;
+
+  --color-accent: #d62828;
+  --color-accent-hover: #b71e1e;
+  --color-accent-dim: rgba(214, 40, 40, 0.08);
+
+  --color-palette-navy: #003049;
+  --color-palette-red: #d62828;
+  --color-palette-orange: #f77f00;
+  --color-palette-yellow: #fcbf49;
 
   --font-display: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -26,4 +39,10 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+/* Selection uses the red accent for a little warmth */
+::selection {
+  background: rgba(247, 127, 0, 0.25);
+  color: var(--color-foreground);
 }
