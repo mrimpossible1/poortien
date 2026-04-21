@@ -135,17 +135,6 @@ export const proteins: Protein[] = [
     calories: 1800, // 12 x 150
   },
   {
-    id: "kirkland-protein-shake-18pk",
-    name: "Kirkland Signature Protein Shake",
-    variant: "Chocolate · Costco · 18-pack · 11oz bottles",
-    type: "grocery",
-    category: "drink",
-    // Label: 30g protein, 160 cal, 2g sugar per bottle. Costco US ~$22.99 for 18pk.
-    proteinGrams: 540, // 18 x 30g
-    price: 22.99,
-    calories: 2880, // 18 x 160
-  },
-  {
     id: "jocko-molk-shake-chocolate-12pk",
     name: "Jocko Mölk Protein Shake",
     variant: "Chocolate · 12-pack · 12oz bottles",
