@@ -1,0 +1,95 @@
+# poortien
+
+A simple, sortable database of protein products ranked by **price per gram of protein**.
+
+Static Next.js site, deployed to Netlify. The "database" is a hardcoded TypeScript file - no Supabase, no API, no backend.
+
+## Stack
+
+- Next.js 16 (App Router) + React 19 + TypeScript
+- Tailwind CSS v4
+- Static export (`output: "export"`) → deploys to any static host (Netlify)
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Open http://localhost:3000.
+
+## Build
+
+```bash
+npm run build
+```
+
+Outputs static files to `out/` which Netlify serves.
+
+## Adding / updating a product
+
+The entire product list lives in **one file**: [`src/data/proteins.ts`](src/data/proteins.ts).
+
+Each entry has these real fields (the rest are derived):
+
+| Field          | What to enter                                                  |
+| -------------- | -------------------------------------------------------------- |
+| `id`           | Unique slug (e.g. `"oikos-pro-vanilla-4pk"`)                   |
+| `name`         | Brand + flavor + size (e.g. `"Oikos Pro Vanilla (4-pack)"`)    |
+| `type`         | **Where** you buy it: `"grocery"`, `"convenience"`, `"fast-food"` |
+| `category`     | **What** it is: `"drink"`, `"yogurt"`, `"snack"`, `"whey"`, `"meal"` |
+| `proteinGrams` | **Total** grams of protein in the whole package/item           |
+| `price`        | **Total** USD price of the whole package/item                  |
+| `calories`     | **Total** calories in the whole package/item                   |
+
+`$/g protein`, `$/20g protein`, and `cal/g protein` are calculated automatically.
+
+### `type` cheat sheet (where you buy it)
+
+- `grocery` — multi-pack / bulk from a grocery store or Costco (e.g. 12-pack shakes, 5 lb whey tub)
+- `convenience` — single-serve / on-the-go (e.g. one Fairlife bottle from 7-Eleven, single Chomps stick)
+- `fast-food` — restaurant / drive-thru item (e.g. Chipotle bowl, Wendy's burger, Subway Protein Pocket)
+
+### `category` cheat sheet (what it is)
+
+- `drink` — ready-to-drink shakes, protein milks (Fairlife, Premier, Oikos Pro drinks, Jocko Mölk shakes)
+- `yogurt` — Greek yogurt cups or tubs (Oikos Pro, Triple Zero, Chobani Fit)
+- `snack` — bars, puffs, jerky, cottage cheese, tuna pouches, hard-boiled eggs
+- `whey` — powdered whey / isolate / blend tubs & bags (ON, Kirkland, Jocko Mölk powder, Promix)
+- `meal` — full-meal protein: rotisserie chicken, dozen raw eggs, any fast-food item
+
+### Tip
+
+For multi-serving packages, use `servings × perServing`:
+
+```ts
+{
+  id: "on-gold-standard-whey-vanilla-5lb",
+  name: "Optimum Nutrition Gold Standard Whey, Vanilla (5 lb)",
+  type: "grocery",
+  category: "whey",
+  proteinGrams: 1680,  // 70 servings × 24g
+  price: 79.99,
+  calories: 8400,      // 70 × 120
+},
+```
+
+Commit, push, Netlify rebuilds.
+
+## File layout
+
+```
+src/
+  app/
+    layout.tsx      # shell + metadata
+    page.tsx        # homepage, renders the table
+    globals.css     # Tailwind v4 theme
+  components/
+    ProteinTable.tsx # sortable table + mobile cards
+  data/
+    proteins.ts      # the "database" - edit this to add products
+  lib/
+    types.ts         # Protein type
+    calc.ts          # derived fields + formatters
+```
