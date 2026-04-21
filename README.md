@@ -44,7 +44,24 @@ Each entry has these real fields (the rest are derived):
 | `price`        | **Total** USD price of the whole package/item                  |
 | `calories`     | **Total** calories in the whole package/item                   |
 
-`$/g protein`, `$/20g protein`, and `cal/g protein` are calculated automatically.
+`$/g protein`, `$/20g protein`, `cal/g protein`, and `cal/20g protein` are calculated automatically.
+
+### The two costs of protein
+
+Every gram of protein has two costs: **dollars** and **calories**. Both show up as `/20g` columns because most people think in ~20g chunks (one shake, one chicken breast, one yogurt cup).
+
+Why both matter: if you're trying to hit 150g protein on a 2,000 cal cut, you literally cannot afford to spend more than ~13 calories per gram of protein — otherwise you blow your calorie budget just hitting your protein target.
+
+`cal/20g protein` is color-coded:
+
+| cal/g protein | cal/20g protein | Tier          | What it looks like                                                  |
+| ------------- | --------------- | ------------- | ------------------------------------------------------------------- |
+| ≤ 7           | ≤ 140           | **Lean** (green)     | Whey, chicken breast, tuna, plain Greek yogurt, ready-to-drink shakes |
+| 7 – 10        | 140 – 200       | Balanced (muted)     | Cottage cheese, Oikos Triple Zero, Quest puffs, most bars           |
+| 10 – 15       | 200 – 300       | Heavy (orange)       | Whole eggs, ground beef, Chipotle bowls, most fast-food "no bun"    |
+| > 15          | > 300           | **Cal bomb** (red)   | Subway Italian Trio, McDonald's Triple, Wendy's Baconator           |
+
+There's also a **Lean protein** quick-filter preset that hides anything over 8 cal/g protein.
 
 ### Splitting `name` vs `variant`
 

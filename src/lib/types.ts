@@ -38,6 +38,7 @@ export type ProteinWithDerived = Protein & {
   pricePerGramProtein: number;
   pricePer20gProtein: number;
   caloriesPerGramProtein: number;
+  caloriesPer20gProtein: number;
 };
 
 export type SortKey =
@@ -47,6 +48,23 @@ export type SortKey =
   | "calories"
   | "pricePerGramProtein"
   | "pricePer20gProtein"
-  | "caloriesPerGramProtein";
+  | "caloriesPerGramProtein"
+  | "caloriesPer20gProtein";
 
 export type SortDir = "asc" | "desc";
+
+/**
+ * Protein efficiency thresholds (calories per 1g protein).
+ * Fitness-oriented: lower = you can hit a protein target without blowing your calorie budget.
+ *
+ *  ≤ 7   : Lean — elite (whey, chicken breast, white fish, plain Greek yogurt)
+ *  ≤ 10  : Balanced — still fine on a cut (most shakes, lean bars, cottage cheese)
+ *  ≤ 15  : Heavy — full meals, calorie-dense (ground beef, whole eggs, most fast food)
+ *  > 15  : Calorie bomb — getting protein here wastes your calorie budget
+ */
+export const LEAN_CAL_PER_G = 7;
+export const BALANCED_CAL_PER_G = 10;
+export const HEAVY_CAL_PER_G = 15;
+
+/** Default cutoff used by the "Lean protein" preset (cal per 1g protein). */
+export const LEAN_PRESET_MAX_CAL_PER_G = 8;

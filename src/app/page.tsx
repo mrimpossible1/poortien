@@ -17,9 +17,12 @@ export default function Home() {
           </span>
         </div>
         <p className="mt-3 text-[var(--color-muted)] max-w-2xl text-sm sm:text-base">
-          A simple, sortable list of protein products. Compare total price,
-          grams of protein, total calories, and the one number that matters
-          most: <strong className="text-[var(--color-foreground)]">$/g protein</strong>.
+          A simple, sortable list of protein products. The two numbers that
+          actually matter for hitting a protein target on a budget:{" "}
+          <strong className="text-[var(--color-foreground)]">$/20g protein</strong>{" "}
+          (dollar cost) and{" "}
+          <strong className="text-[var(--color-foreground)]">cal/20g protein</strong>{" "}
+          (calorie cost). Green = lean, orange = heavy, red = calorie bomb.
         </p>
       </header>
 

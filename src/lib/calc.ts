@@ -4,11 +4,13 @@ export function withDerived(p: Protein): ProteinWithDerived {
   const pricePerGramProtein = p.proteinGrams > 0 ? p.price / p.proteinGrams : 0;
   const pricePer20gProtein = pricePerGramProtein * 20;
   const caloriesPerGramProtein = p.proteinGrams > 0 ? p.calories / p.proteinGrams : 0;
+  const caloriesPer20gProtein = caloriesPerGramProtein * 20;
   return {
     ...p,
     pricePerGramProtein,
     pricePer20gProtein,
     caloriesPerGramProtein,
+    caloriesPer20gProtein,
   };
 }
 

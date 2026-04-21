@@ -9,6 +9,10 @@ import type {
   SortKey,
 } from "@/lib/types";
 import {
+  BALANCED_CAL_PER_G,
+  HEAVY_CAL_PER_G,
+  LEAN_CAL_PER_G,
+  LEAN_PRESET_MAX_CAL_PER_G,
   PROTEIN_CATEGORY_LABELS,
   PROTEIN_TYPE_LABELS,
 } from "@/lib/types";
@@ -35,7 +39,7 @@ const COLUMNS: Column[] = [
   { key: "pricePerGramProtein", label: "$/g protein", numeric: true },
   { key: "pricePer20gProtein", label: "$/20g protein", numeric: true },
   { key: "calories", label: "Calories", numeric: true },
-  { key: "caloriesPerGramProtein", label: "cal/g protein", numeric: true },
+  { key: "caloriesPer20gProtein", label: "cal/20g protein", numeric: true },
 ];
 
 const TYPE_ORDER: ProteinType[] = ["grocery", "convenience", "fast-food"];
@@ -73,6 +77,8 @@ type Preset = {
   categories?: ProteinCategory[];
   sortKey?: SortKey;
   sortDir?: SortDir;
+  /** If set, filter to items where caloriesPerGramProtein ≤ this value. */
+  maxCalPerGram?: number;
 };
 
 // Quick-filter presets — one click resets filters + sort to a useful slice
@@ -80,6 +86,13 @@ const PRESETS: Preset[] = [
   {
     id: "cheapest",
     label: "Cheapest $/20g",
+    sortKey: "pricePer20gProtein",
+    sortDir: "asc",
+  },
+  {
+    id: "lean",
+    label: "Lean protein",
+    maxCalPerGram: LEAN_PRESET_MAX_CAL_PER_G,
     sortKey: "pricePer20gProtein",
     sortDir: "asc",
   },
@@ -92,6 +105,25 @@ const PRESETS: Preset[] = [
   { id: "bulk", label: "Bulk / grocery", types: ["grocery"] },
 ];
 
+function calEfficiencyClass(calPerG: number): string {
+  if (calPerG <= LEAN_CAL_PER_G) {
+    return "text-[#1f7a3a] font-semibold"; // lean — forest green
+  }
+  if (calPerG <= BALANCED_CAL_PER_G) {
+    return "text-[var(--color-muted)]"; // balanced — default muted
+  }
+  if (calPerG <= HEAVY_CAL_PER_G) {
+    return "text-[#B55F00] font-medium"; // heavy — palette orange
+  }
+  return "text-[#A31F1F] font-semibold"; // cal bomb — palette red
+}
+
+function calEfficiencyLabel(calPerG: number): string | null {
+  if (calPerG <= LEAN_CAL_PER_G) return "Lean";
+  if (calPerG > HEAVY_CAL_PER_G) return "Cal bomb";
+  return null;
+}
+
 export default function ProteinTable({ items }: Props) {
   const [query, setQuery] = useState("");
   const [activeTypes, setActiveTypes] = useState<Set<ProteinType>>(
@@ -102,6 +134,7 @@ export default function ProteinTable({ items }: Props) {
   );
   const [sortKey, setSortKey] = useState<SortKey>("pricePer20gProtein");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
+  const [maxCalPerGram, setMaxCalPerGram] = useState<number | null>(null);
 
   const filteredSorted = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -110,6 +143,9 @@ export default function ProteinTable({ items }: Props) {
     // matches ("chipotle" returning 0 results because fast-food is toggled off).
     const searching = q.length > 0;
     const filtered = items.filter((i) => {
+      if (maxCalPerGram !== null && i.caloriesPerGramProtein > maxCalPerGram) {
+        return false;
+      }
       if (!searching) {
         if (!activeTypes.has(i.type)) return false;
         if (!activeCategories.has(i.category)) return false;
@@ -133,7 +169,7 @@ export default function ProteinTable({ items }: Props) {
     });
 
     return sorted;
-  }, [items, query, activeTypes, activeCategories, sortKey, sortDir]);
+  }, [items, query, activeTypes, activeCategories, sortKey, sortDir, maxCalPerGram]);
 
   // Best value = lowest $/g protein WITHIN the currently visible set
   const bestId = useMemo(() => {
@@ -181,6 +217,7 @@ export default function ProteinTable({ items }: Props) {
     setActiveCategories(new Set(preset.categories ?? CATEGORY_ORDER));
     setSortKey(preset.sortKey ?? "pricePer20gProtein");
     setSortDir(preset.sortDir ?? "asc");
+    setMaxCalPerGram(preset.maxCalPerGram ?? null);
     setQuery("");
   }
 
@@ -189,6 +226,7 @@ export default function ProteinTable({ items }: Props) {
     setActiveCategories(new Set(CATEGORY_ORDER));
     setSortKey("pricePer20gProtein");
     setSortDir("asc");
+    setMaxCalPerGram(null);
     setQuery("");
   }
 
@@ -226,13 +264,14 @@ export default function ProteinTable({ items }: Props) {
         setEquals(expectedCats, activeCategories) &&
         (p.sortKey ?? "pricePer20gProtein") === sortKey &&
         (p.sortDir ?? "asc") === sortDir &&
+        (p.maxCalPerGram ?? null) === maxCalPerGram &&
         query.trim() === ""
       ) {
         return p.id;
       }
     }
     return null;
-  }, [activeTypes, activeCategories, sortKey, sortDir, query]);
+  }, [activeTypes, activeCategories, sortKey, sortDir, maxCalPerGram, query]);
 
   return (
     <div>
@@ -431,8 +470,15 @@ export default function ProteinTable({ items }: Props) {
                   <td className="px-4 py-3 text-right tabular-nums text-[var(--color-muted)] align-top">
                     {formatNumber(p.calories)}
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums text-[var(--color-muted)] align-top">
-                    {formatNumber(p.caloriesPerGramProtein, 1)}
+                  <td
+                    className={`px-4 py-3 text-right tabular-nums align-top ${calEfficiencyClass(
+                      p.caloriesPerGramProtein
+                    )}`}
+                    title={`${p.caloriesPerGramProtein.toFixed(
+                      1
+                    )} cal per 1g protein`}
+                  >
+                    {formatNumber(p.caloriesPer20gProtein, 0)}
                   </td>
                 </tr>
               );
@@ -529,8 +575,9 @@ export default function ProteinTable({ items }: Props) {
                 />
                 <Stat label="Calories" value={formatNumber(p.calories)} />
                 <Stat
-                  label="cal/g protein"
-                  value={formatNumber(p.caloriesPerGramProtein, 1)}
+                  label="cal/20g protein"
+                  value={formatNumber(p.caloriesPer20gProtein, 0)}
+                  valueClassName={calEfficiencyClass(p.caloriesPerGramProtein)}
                 />
               </div>
             </div>
@@ -576,10 +623,12 @@ function Stat({
   label,
   value,
   emphasize,
+  valueClassName,
 }: {
   label: string;
   value: string;
   emphasize?: boolean;
+  valueClassName?: string;
 }) {
   return (
     <div>
@@ -589,7 +638,7 @@ function Stat({
       <div
         className={`tabular-nums ${
           emphasize ? "font-semibold text-base" : ""
-        }`}
+        } ${valueClassName ?? ""}`}
       >
         {value}
       </div>
